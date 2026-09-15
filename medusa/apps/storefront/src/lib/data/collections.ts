@@ -6,6 +6,7 @@ import { getCacheOptions } from "./cookies"
 
 export const retrieveCollection = async (id: string) => {
   const next = {
+    revalidate: 60,
     ...(await getCacheOptions("collections")),
   }
 
@@ -24,6 +25,7 @@ export const listCollections = async (
   queryParams: Record<string, string> = {}
 ): Promise<{ collections: HttpTypes.StoreCollection[]; count: number }> => {
   const next = {
+    revalidate: 60,
     ...(await getCacheOptions("collections")),
   }
 
@@ -46,6 +48,7 @@ export const getCollectionByHandle = async (
   handle: string
 ): Promise<HttpTypes.StoreCollection | null> => {
   const next = {
+    revalidate: 60,
     ...(await getCacheOptions("collections")),
   }
 
