@@ -23,4 +23,6 @@ build
 !.yarn/sdks
 !.yarn/versions
 
-.medusa
+# Not ignored: Railway's build->runtime image copy appears to respect
+# .gitignore, so gitignoring the build output here caused it to be silently
+# dropped before the container that actually runs `medusa start` sees it.
