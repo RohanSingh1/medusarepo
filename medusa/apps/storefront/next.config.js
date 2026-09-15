@@ -43,6 +43,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "staging.tfo.com.au",
       },
+      {
+        protocol: "https",
+        hostname: "strapi-cms-production-00d0.up.railway.app",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-backend-production-4a4e.up.railway.app",
+      },
       ...(S3_HOSTNAME && S3_PATHNAME
         ? [
             {
