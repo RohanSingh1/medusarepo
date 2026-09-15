@@ -21,6 +21,8 @@ type MobileActionsProps = {
   isAdding?: boolean
   show: boolean
   optionsDisabled: boolean
+  onReset: () => void
+  hasSelection: boolean
 }
 
 const MobileActions: React.FC<MobileActionsProps> = ({
@@ -33,6 +35,8 @@ const MobileActions: React.FC<MobileActionsProps> = ({
   isAdding,
   show,
   optionsDisabled,
+  onReset,
+  hasSelection,
 }) => {
   const { state, open, close } = useToggleState()
 
@@ -174,6 +178,18 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                   <div className="bg-white px-6 py-12">
                     {(product.variants?.length ?? 0) > 1 && (
                       <div className="flex flex-col gap-y-6">
+                        {hasSelection && (
+                          <div className="flex justify-end">
+                            <button
+                              type="button"
+                              onClick={onReset}
+                              disabled={optionsDisabled}
+                              className="text-small-regular text-ui-fg-interactive underline underline-offset-2 disabled:opacity-50"
+                            >
+                              Reset
+                            </button>
+                          </div>
+                        )}
                         {(product.options || []).map((option) => {
                           return (
                             <div key={option.id}>

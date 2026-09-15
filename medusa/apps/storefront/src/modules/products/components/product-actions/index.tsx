@@ -68,6 +68,10 @@ export default function ProductActions({
     }))
   }
 
+  // clear the selection so the gallery falls back to the product's default images
+  const resetOptions = () => setOptions({})
+  const hasSelection = Object.keys(options).length > 0
+
   //check if the selected options produce a valid variant
   const isValidVariant = useMemo(() => {
     return product.variants?.some((v) => {
@@ -129,6 +133,22 @@ export default function ProductActions({
         <div>
           {(product.variants?.length ?? 0) > 1 && (
             <div className="flex flex-col gap-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-ui-fg-subtle">
+                  Choose an option
+                </span>
+                {hasSelection && (
+                  <button
+                    type="button"
+                    onClick={resetOptions}
+                    disabled={!!disabled || isAdding}
+                    className="text-small-regular text-ui-fg-interactive underline underline-offset-2 hover:text-ui-fg-interactive-hover disabled:opacity-50"
+                    data-testid="reset-variant-button"
+                  >
+                    Reset
+                  </button>
+                )}
+              </div>
               {(product.options || []).map((option) => {
                 return (
                   <div key={option.id}>
@@ -180,6 +200,8 @@ export default function ProductActions({
           isAdding={isAdding}
           show={!inView}
           optionsDisabled={!!disabled || isAdding}
+          onReset={resetOptions}
+          hasSelection={hasSelection}
         />
       </div>
     </>
