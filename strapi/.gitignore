@@ -124,8 +124,10 @@ coverage
 .env
 license.txt
 exports
-.strapi
-dist
-build
 .strapi-updater.json
 .strapi-cloud.json
+# Not ignored: dist/build/.strapi are Strapi's compiled build output. Railway's
+# build->runtime image copy respects .gitignore (learned this the hard way
+# with the Medusa backend deploy), so gitignoring these here would silently
+# drop the compiled server/admin bundle before the container that runs
+# `strapi start` ever sees it.
