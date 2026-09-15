@@ -108,7 +108,21 @@ export async function middleware(request: NextRequest) {
   const cacheIdCookie = request.cookies.get("_medusa_cache_id")
   const cacheId = cacheIdCookie?.value || crypto.randomUUID()
 
-  const regionMap = await getRegionMap(cacheId)
+  let regionMap: Map<string, HttpTypes.StoreRegion>
+  try {
+    regionMap = await getRegionMap(cacheId)
+  } catch (error) {
+    // The backend may be unreachable (e.g. not deployed yet, or a
+    // transient outage). Fall back to an empty map so the request still
+    // routes using DEFAULT_REGION below, instead of crashing every
+    // single page with a 500 MIDDLEWARE_INVOCATION_FAILED.
+    console.error(
+      `Middleware: failed to fetch regions, falling back to default region "${DEFAULT_REGION}": ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    )
+    regionMap = new Map()
+  }
   const countryCode = await getCountryCode(request, regionMap)
 
   // if the country code is available, use it, otherwise use the default region
