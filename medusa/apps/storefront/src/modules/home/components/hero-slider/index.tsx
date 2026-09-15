@@ -6,62 +6,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 
 import { Button } from "@modules/common/components/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-
-type Slide = {
-  image: string
-  eyebrow: string
-  title: string
-  subtitle: string
-  ctaLabel: string
-  ctaHref: string
-}
-
-const SLIDES: Slide[] = [
-  {
-    image:
-      "https://staging.tfo.com.au/wp-content/uploads/1970/01/5711.jpg",
-    eyebrow: "Outdoor & Pool Tiles",
-    title: "Outdoor Tiles Built to Last",
-    subtitle:
-      "Anti-slip porcelain for alfresco areas, balconies and pool surrounds.",
-    ctaLabel: "Shop Outdoor Tiles",
-    ctaHref: "/store",
-  },
-  {
-    image:
-      "https://staging.tfo.com.au/wp-content/uploads/Arezzo-Perla-Glazed-Matt-Spanish-Porcelain-Tile-1.jpg",
-    eyebrow: "Large Format Porcelain",
-    title: "Factory Direct Prices, Every Day",
-    subtitle:
-      "Skip the middleman. The same premium tiles, at Sydney's lowest outlet prices.",
-    ctaLabel: "Shop All Tiles",
-    ctaHref: "/store",
-  },
-  {
-    image:
-      "https://staging.tfo.com.au/wp-content/uploads/pearl-blue-silicone-joined-spanish-pool-mosaic-tile-1.jpg",
-    eyebrow: "Pool Mosaics",
-    title: "Transform Your Pool",
-    subtitle:
-      "Spanish glass mosaics designed for pool floors and waterlines.",
-    ctaLabel: "Shop Pool Mosaics",
-    ctaHref: "/store",
-  },
-  {
-    image:
-      "https://staging.tfo.com.au/wp-content/uploads/bianco-carrara-arabesque-polished-marble-mosaic-sheet-1.jpg",
-    eyebrow: "Natural Stone",
-    title: "Marble & Natural Stone",
-    subtitle:
-      "Bring timeless texture to bathrooms, splashbacks and feature walls.",
-    ctaLabel: "Shop Natural Stone",
-    ctaHref: "/store",
-  },
-]
+import { HeroSlide } from "@lib/data/homepage-content"
 
 const AUTOPLAY_INTERVAL_MS = 6000
 
-const HeroSlider = () => {
+const HeroSlider = ({ slides }: { slides: HeroSlide[] }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
   const [selectedIndex, setSelectedIndex] = useState(0)
 
@@ -88,36 +37,48 @@ const HeroSlider = () => {
     return () => clearInterval(interval)
   }, [emblaApi])
 
+  if (!slides.length) {
+    return null
+  }
+
   return (
     <div className="relative w-full h-[60vh] small:h-[75vh] overflow-hidden border-b border-ui-border-base">
       <div className="overflow-hidden h-full" ref={emblaRef}>
         <div className="flex h-full">
-          {SLIDES.map((slide, index) => (
+          {slides.map((slide, index) => (
             <div
-              key={index}
+              key={slide.id}
               className="relative flex-[0_0_100%] h-full"
               aria-hidden={selectedIndex !== index}
             >
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${slide.image})` }}
-              />
+              {slide.imageUrl && (
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${slide.imageUrl})` }}
+                />
+              )}
               <div className="absolute inset-0 bg-black/40" />
               <div className="content-container relative z-10 h-full flex flex-col justify-center items-start gap-4 text-left">
-                <span className="text-white/80 text-small-semi uppercase tracking-wider">
-                  {slide.eyebrow}
-                </span>
+                {slide.eyebrow && (
+                  <span className="text-white/80 text-small-semi uppercase tracking-wider">
+                    {slide.eyebrow}
+                  </span>
+                )}
                 <h1 className="text-white text-3xl small:text-5xl font-semibold max-w-xl leading-tight">
                   {slide.title}
                 </h1>
-                <p className="text-white/90 text-base small:text-large-regular max-w-md">
-                  {slide.subtitle}
-                </p>
-                <LocalizedClientLink href={slide.ctaHref}>
-                  <Button size="large" className="mt-2">
-                    {slide.ctaLabel}
-                  </Button>
-                </LocalizedClientLink>
+                {slide.subtitle && (
+                  <p className="text-white/90 text-base small:text-large-regular max-w-md">
+                    {slide.subtitle}
+                  </p>
+                )}
+                {slide.ctaLabel && slide.ctaHref && (
+                  <LocalizedClientLink href={slide.ctaHref}>
+                    <Button size="large" className="mt-2">
+                      {slide.ctaLabel}
+                    </Button>
+                  </LocalizedClientLink>
+                )}
               </div>
             </div>
           ))}
@@ -142,9 +103,9 @@ const HeroSlider = () => {
       </button>
 
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        {SLIDES.map((_, index) => (
+        {slides.map((slide, index) => (
           <button
-            key={index}
+            key={slide.id}
             type="button"
             aria-label={`Go to slide ${index + 1}`}
             onClick={() => scrollTo(index)}

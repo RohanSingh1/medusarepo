@@ -2,6 +2,7 @@ import { HttpTypes } from "@medusajs/types"
 
 import { getCollectionByHandle } from "@lib/data/collections"
 import { listProducts } from "@lib/data/products"
+import { isProductInStock } from "@lib/util/is-product-in-stock"
 import { Heading, Text } from "@modules/common/components/ui"
 import InteractiveLink from "@modules/common/components/interactive-link"
 import ProductPreview from "@modules/products/components/product-preview"
@@ -25,11 +26,13 @@ export default async function FeaturedProducts({
     regionId: region.id,
     queryParams: {
       collection_id: collection.id,
-      fields: "*variants.calculated_price",
+      fields: "*variants.calculated_price,+variants.inventory_quantity",
     },
   })
 
-  if (!products?.length) {
+  const inStockProducts = products?.filter(isProductInStock) ?? []
+
+  if (!inStockProducts.length) {
     return null
   }
 
@@ -49,7 +52,7 @@ export default async function FeaturedProducts({
         </InteractiveLink>
       </div>
       <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-12 small:gap-y-24">
-        {products.map((product) => (
+        {inStockProducts.map((product) => (
           <li key={product.id}>
             <ProductPreview product={product} region={region} isFeatured />
           </li>

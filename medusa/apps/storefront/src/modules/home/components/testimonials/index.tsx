@@ -1,33 +1,15 @@
 import { Star } from "lucide-react"
 
+import { listTestimonials } from "@lib/data/homepage-content"
 import { Heading, Text } from "@modules/common/components/ui"
 
-// Placeholder copy - swap in real customer reviews before launch.
-const TESTIMONIALS = [
-  {
-    name: "Sarah M.",
-    location: "Parramatta, NSW",
-    quote:
-      "Incredible range and the prices were much better than the big box stores. The team helped us pick the right anti-slip tile for our pool area.",
-    rating: 5,
-  },
-  {
-    name: "David K.",
-    location: "Liverpool, NSW",
-    quote:
-      "Ordered a large format porcelain for our living area - arrived well packed and on time. Will be back for the bathroom reno.",
-    rating: 5,
-  },
-  {
-    name: "Priya R.",
-    location: "Blacktown, NSW",
-    quote:
-      "Great advice over the phone about quantities and wastage. Saved us from over-ordering and the tiles look fantastic.",
-    rating: 4,
-  },
-]
+const Testimonials = async () => {
+  const testimonials = await listTestimonials()
 
-const Testimonials = () => {
+  if (!testimonials.length) {
+    return null
+  }
+
   return (
     <div className="content-container py-12 small:py-24">
       <div className="text-center max-w-2xl mx-auto mb-12">
@@ -39,9 +21,9 @@ const Testimonials = () => {
         </Text>
       </div>
       <div className="grid grid-cols-1 small:grid-cols-3 gap-6">
-        {TESTIMONIALS.map(({ name, location, quote, rating }) => (
+        {testimonials.map(({ id, name, location, quote, rating }) => (
           <div
-            key={name}
+            key={id}
             className="flex flex-col gap-4 rounded-large border border-ui-border-base p-6 bg-ui-bg-subtle"
           >
             <div className="flex gap-1">
@@ -62,9 +44,11 @@ const Testimonials = () => {
             </Text>
             <div>
               <Text className="text-base-semi">{name}</Text>
-              <Text className="text-ui-fg-subtle text-small-regular">
-                {location}
-              </Text>
+              {location && (
+                <Text className="text-ui-fg-subtle text-small-regular">
+                  {location}
+                </Text>
+              )}
             </div>
           </div>
         ))}

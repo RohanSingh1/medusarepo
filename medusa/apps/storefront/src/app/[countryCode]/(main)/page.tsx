@@ -5,6 +5,7 @@ import WhyUs from "@modules/home/components/why-us"
 import FeaturedProducts from "@modules/home/components/featured-products"
 import Testimonials from "@modules/home/components/testimonials"
 import { getRegion } from "@lib/data/regions"
+import { listHeroSlides } from "@lib/data/homepage-content"
 
 export const metadata: Metadata = {
   title: "TFO - Tile Factory Outlet",
@@ -25,9 +26,11 @@ export default async function Home(props: {
     return null
   }
 
+  const heroSlides = await listHeroSlides()
+
   return (
     <>
-      <HeroSlider />
+      <HeroSlider slides={heroSlides} />
       <WhyUs />
       <FeaturedProducts region={region} />
       <Testimonials />

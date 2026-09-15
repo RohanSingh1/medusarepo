@@ -2,6 +2,7 @@
 
 import { addToCart } from "@lib/data/cart"
 import { useIntersection } from "@lib/hooks/use-in-view"
+import { isVariantInStock } from "@lib/util/is-product-in-stock"
 import { HttpTypes } from "@medusajs/types"
 import { Button } from "@modules/common/components/ui"
 import Divider from "@modules/common/components/divider"
@@ -89,32 +90,19 @@ export default function ProductActions({
       params.delete("v_id")
     }
 
-    router.replace(pathname + "?" + params.toString())
+    router.replace(pathname + "?" + params.toString(), { scroll: false })
+    // The image gallery is rendered server-side from `v_id` (see the product
+    // page's `getImagesForVariant`). A searchParams-only `router.replace`
+    // doesn't reliably re-fetch that server render on its own, so force it -
+    // otherwise the gallery can keep showing the previous variant's photo.
+    router.refresh()
   }, [selectedVariant, isValidVariant])
 
   // check if the selected variant is in stock
-  const inStock = useMemo(() => {
-    // If we don't manage inventory, we can always add to cart
-    if (selectedVariant && !selectedVariant.manage_inventory) {
-      return true
-    }
-
-    // If we allow back orders on the variant, we can add to cart
-    if (selectedVariant?.allow_backorder) {
-      return true
-    }
-
-    // If there is inventory available, we can add to cart
-    if (
-      selectedVariant?.manage_inventory &&
-      (selectedVariant?.inventory_quantity || 0) > 0
-    ) {
-      return true
-    }
-
-    // Otherwise, we can't add to cart
-    return false
-  }, [selectedVariant])
+  const inStock = useMemo(
+    () => isVariantInStock(selectedVariant),
+    [selectedVariant]
+  )
 
   const actionsRef = useRef<HTMLDivElement>(null)
 

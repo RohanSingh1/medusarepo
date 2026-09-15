@@ -2,6 +2,7 @@
 
 import { sdk } from "@lib/config"
 import { OptionValueIds } from "@lib/util/product-option-filters"
+import { isProductInStock } from "@lib/util/is-product-in-stock"
 import { sortProducts } from "@lib/util/sort-products"
 import { HttpTypes } from "@medusajs/types"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
@@ -130,11 +131,13 @@ export const listProductsWithSort = async ({
     countryCode,
   })
 
-  const sortedProducts = sortProducts(products, sortBy)
+  const inStockProducts = products.filter(isProductInStock)
+
+  const sortedProducts = sortProducts(inStockProducts, sortBy)
 
   const pageParam = (page - 1) * limit
 
-  const filteredCount = products.length
+  const filteredCount = inStockProducts.length
 
   const nextPage = filteredCount > pageParam + limit ? pageParam + limit : null
 
