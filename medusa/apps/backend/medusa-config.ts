@@ -14,21 +14,28 @@ module.exports = defineConfig({
     }
   },
   modules: [
-    {
-      resolve: "@medusajs/medusa/payment",
-      options: {
-        providers: [
+    // Stripe requires a real apiKey to boot at all - only register it once
+    // one is actually configured, otherwise the whole Payment module (and
+    // the server) fails to start.
+    ...(process.env.STRIPE_API_KEY
+      ? [
           {
-            resolve: "@medusajs/payment-stripe",
-            id: "stripe",
+            resolve: "@medusajs/medusa/payment",
             options: {
-              apiKey: process.env.STRIPE_API_KEY,
-              webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+              providers: [
+                {
+                  resolve: "@medusajs/payment-stripe",
+                  id: "stripe",
+                  options: {
+                    apiKey: process.env.STRIPE_API_KEY,
+                    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+                  },
+                },
+              ],
             },
           },
-        ],
-      },
-    },
+        ]
+      : []),
     {
       resolve: "./src/modules/product-feature",
     },
