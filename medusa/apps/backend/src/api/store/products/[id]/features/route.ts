@@ -10,9 +10,9 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     filters: { id: req.params.id },
   })
 
-  const features = (data[0]?.product_features ?? []).sort(
-    (a: { rank: number }, b: { rank: number }) => a.rank - b.rank
-  )
+  const features = (data[0]?.product_features ?? [])
+    .filter((f): f is NonNullable<typeof f> => f != null)
+    .sort((a, b) => a.rank - b.rank)
 
   res.json({ features })
 }
