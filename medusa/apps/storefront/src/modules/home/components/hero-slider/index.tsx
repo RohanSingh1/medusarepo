@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 import useEmblaCarousel from "embla-carousel-react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { Button } from "@modules/common/components/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
@@ -12,108 +12,114 @@ const AUTOPLAY_INTERVAL_MS = 6000
 
 const HeroSlider = ({ slides }: { slides: HeroSlide[] }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
+  const [imageEmblaRef, imageEmblaApi] = useEmblaCarousel({ loop: true })
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  const scrollTo = useCallback(
-    (index: number) => emblaApi?.scrollTo(index),
-    [emblaApi]
-  )
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
 
   useEffect(() => {
-    if (!emblaApi) return
+    if (!emblaApi || !imageEmblaApi) return
     const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap())
     emblaApi.on("select", onSelect)
+    emblaApi.on("select", () => imageEmblaApi.scrollTo(emblaApi.selectedScrollSnap()))
     onSelect()
     return () => {
       emblaApi.off("select", onSelect)
     }
-  }, [emblaApi])
+  }, [emblaApi, imageEmblaApi])
 
   useEffect(() => {
     if (!emblaApi) return
     const interval = setInterval(() => emblaApi.scrollNext(), AUTOPLAY_INTERVAL_MS)
     return () => clearInterval(interval)
-  }, [emblaApi])
+  }, [emblaApi, selectedIndex])
 
   if (!slides.length) {
     return null
   }
 
   return (
-    <div className="relative w-full h-[60vh] small:h-[75vh] overflow-hidden border-b border-ui-border-base">
-      <div className="overflow-hidden h-full" ref={emblaRef}>
-        <div className="flex h-full">
-          {slides.map((slide, index) => (
-            <div
-              key={slide.id}
-              className="relative flex-[0_0_100%] h-full"
-              aria-hidden={selectedIndex !== index}
+    <div className="content-container py-6 small:py-10">
+      <div className="relative grid grid-cols-1 small:grid-cols-2 rounded-large overflow-hidden bg-ui-bg-subtle border border-ui-border-base">
+        {/* Text panel */}
+        <div className="order-2 small:order-1 flex flex-col justify-center gap-5 p-8 small:p-14">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {slides.map((slide) => (
+                <div key={slide.id} className="flex-[0_0_100%] flex flex-col gap-4">
+                  {slide.eyebrow && (
+                    <span className="inline-flex w-fit items-center rounded-full bg-ui-tag-neutral-bg px-3 py-1 text-small-semi uppercase tracking-wider text-ui-tag-neutral-text">
+                      {slide.eyebrow}
+                    </span>
+                  )}
+                  <h1 className="text-ui-fg-base text-3xl small:text-4xl font-semibold leading-tight">
+                    {slide.title}
+                  </h1>
+                  {slide.subtitle && (
+                    <p className="text-ui-fg-subtle text-base small:text-large-regular max-w-md">
+                      {slide.subtitle}
+                    </p>
+                  )}
+                  {slide.ctaLabel && slide.ctaHref && (
+                    <LocalizedClientLink href={slide.ctaHref}>
+                      <Button size="large" className="mt-2 w-fit">
+                        {slide.ctaLabel}
+                      </Button>
+                    </LocalizedClientLink>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 mt-4">
+            <button
+              type="button"
+              onClick={scrollPrev}
+              aria-label="Previous slide"
+              className="flex items-center justify-center h-10 w-10 rounded-base border border-ui-border-base text-ui-fg-base hover:bg-ui-bg-base-hover transition-colors"
             >
-              {slide.imageUrl && (
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${slide.imageUrl})` }}
-                />
-              )}
-              <div className="absolute inset-0 bg-black/40" />
-              <div className="content-container relative z-10 h-full flex flex-col justify-center items-start gap-4 text-left">
-                {slide.eyebrow && (
-                  <span className="text-white/80 text-small-semi uppercase tracking-wider">
-                    {slide.eyebrow}
-                  </span>
-                )}
-                <h1 className="text-white text-3xl small:text-5xl font-semibold max-w-xl leading-tight">
-                  {slide.title}
-                </h1>
-                {slide.subtitle && (
-                  <p className="text-white/90 text-base small:text-large-regular max-w-md">
-                    {slide.subtitle}
-                  </p>
-                )}
-                {slide.ctaLabel && slide.ctaHref && (
-                  <LocalizedClientLink href={slide.ctaHref}>
-                    <Button size="large" className="mt-2">
-                      {slide.ctaLabel}
-                    </Button>
-                  </LocalizedClientLink>
+              <ArrowLeft size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={scrollNext}
+              aria-label="Next slide"
+              className="flex items-center justify-center h-10 w-10 rounded-base border border-ui-border-base text-ui-fg-base hover:bg-ui-bg-base-hover transition-colors"
+            >
+              <ArrowRight size={18} />
+            </button>
+
+            <span className="text-ui-fg-muted text-small-regular ml-1 tabular-nums">
+              {String(selectedIndex + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+            </span>
+
+            <div className="flex-1 h-1 rounded-full bg-ui-bg-base overflow-hidden max-w-[140px]">
+              <div
+                key={selectedIndex}
+                className="h-full bg-ui-fg-base rounded-full animate-hero-progress"
+                style={{ animationDuration: `${AUTOPLAY_INTERVAL_MS}ms` }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Image panel */}
+        <div className="order-1 small:order-2 relative h-[280px] small:h-[520px] overflow-hidden" ref={imageEmblaRef}>
+          <div className="flex h-full">
+            {slides.map((slide) => (
+              <div key={slide.id} className="relative flex-[0_0_100%] h-full">
+                {slide.imageUrl && (
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${slide.imageUrl})` }}
+                  />
                 )}
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-
-      <button
-        type="button"
-        onClick={scrollPrev}
-        aria-label="Previous slide"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center h-10 w-10 rounded-full bg-white/20 text-white hover:bg-white/30 transition-colors"
-      >
-        <ChevronLeft size={22} />
-      </button>
-      <button
-        type="button"
-        onClick={scrollNext}
-        aria-label="Next slide"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center h-10 w-10 rounded-full bg-white/20 text-white hover:bg-white/30 transition-colors"
-      >
-        <ChevronRight size={22} />
-      </button>
-
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        {slides.map((slide, index) => (
-          <button
-            key={slide.id}
-            type="button"
-            aria-label={`Go to slide ${index + 1}`}
-            onClick={() => scrollTo(index)}
-            className={`h-2 rounded-full transition-all ${
-              selectedIndex === index ? "w-6 bg-white" : "w-2 bg-white/50"
-            }`}
-          />
-        ))}
       </div>
     </div>
   )

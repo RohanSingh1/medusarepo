@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import HeroSlider from "@modules/home/components/hero-slider"
 import WhyUs from "@modules/home/components/why-us"
 import FeaturedProducts from "@modules/home/components/featured-products"
+import LatestProducts from "@modules/home/components/latest-products"
 import Testimonials from "@modules/home/components/testimonials"
 import { getRegion } from "@lib/data/regions"
 import { listHeroSlides } from "@lib/data/homepage-content"
@@ -33,6 +34,7 @@ export default async function Home(props: {
       <HeroSlider slides={heroSlides} />
       <WhyUs />
       <FeaturedProducts region={region} />
+      <LatestProducts region={region} />
       <Testimonials />
     </>
   )
