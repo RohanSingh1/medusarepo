@@ -20,6 +20,12 @@ module.exports = {
         padding: "padding-top padding-right padding-bottom padding-left",
       },
       colors: {
+        brand: {
+          primary: "#0F2942",
+          "primary-hover": "#193C5C",
+          secondary: "#9FCC6D",
+          "secondary-hover": "#8BBE55",
+        },
         grey: {
           0: "#FFFFFF",
           5: "#F9FAFB",
@@ -59,7 +65,8 @@ module.exports = {
       },
       fontFamily: {
         sans: [
-          "Inter",
+          "var(--font-poppins)",
+          "Poppins",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",

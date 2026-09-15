@@ -6,6 +6,7 @@ import { getCacheOptions } from "./cookies"
 
 export const listRegions = async () => {
   const next = {
+    revalidate: 60,
     ...(await getCacheOptions("regions")),
   }
 
@@ -20,6 +21,7 @@ export const listRegions = async () => {
 
 export const retrieveRegion = async (id: string) => {
   const next = {
+    revalidate: 60,
     ...(await getCacheOptions(["regions", id].join("-"))),
   }
 
@@ -32,10 +34,20 @@ export const retrieveRegion = async (id: string) => {
     .then(({ region }) => region)
 }
 
-const regionMap = new Map<string, HttpTypes.StoreRegion>()
+// Unlike the fetch-level `revalidate` above, this in-memory map has no TTL of
+// its own, so a country code once resolved (or found missing) stuck that way
+// for the life of the server process - e.g. a new region added after boot
+// never showed up here even though the underlying fetch had gone stale and
+// refetched. Mirror the 1-hour TTL the storefront's middleware already uses
+// for its own region map.
+let regionMap = new Map<string, HttpTypes.StoreRegion>()
+let regionMapUpdatedAt = 0
+const REGION_MAP_TTL_MS = 3600 * 1000
 
 export const getRegion = async (countryCode: string) => {
-  if (regionMap.has(countryCode)) {
+  const isStale = Date.now() - regionMapUpdatedAt > REGION_MAP_TTL_MS
+
+  if (!isStale && regionMap.has(countryCode)) {
     return regionMap.get(countryCode)
   }
 
@@ -45,11 +57,14 @@ export const getRegion = async (countryCode: string) => {
     return null
   }
 
+  const freshMap = new Map<string, HttpTypes.StoreRegion>()
   regions.forEach((region) => {
     region.countries?.forEach((c) => {
-      regionMap.set(c?.iso_2 ?? "", region)
+      freshMap.set(c?.iso_2 ?? "", region)
     })
   })
+  regionMap = freshMap
+  regionMapUpdatedAt = Date.now()
 
   const region = countryCode
     ? regionMap.get(countryCode)

@@ -2,6 +2,16 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* @medusajs/ui-preset's txt-* typography classes (used by the Text/Heading
+   components) hardcode `font-family: Inter, ...` directly rather than
+   referencing the theme's fontFamily.sans, so overriding tailwind.config.js
+   alone doesn't reach them. !important is the only way to win against that
+   without patching every txt-* class individually. */
+* {
+  font-family: var(--font-poppins), "Poppins", ui-sans-serif, system-ui,
+    sans-serif !important;
+}
+
 @layer utilities {
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {

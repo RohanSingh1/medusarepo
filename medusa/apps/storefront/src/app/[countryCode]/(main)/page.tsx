@@ -1,8 +1,11 @@
 import { Metadata } from "next"
 
 import HeroSlider from "@modules/home/components/hero-slider"
+import PriceLedCategories from "@modules/home/components/price-led-categories"
+import CategoryShowcase from "@modules/home/components/category-showcase"
 import WhyUs from "@modules/home/components/why-us"
 import FeaturedProducts from "@modules/home/components/featured-products"
+import PromoBanner from "@modules/home/components/promo-banner"
 import LatestProducts from "@modules/home/components/latest-products"
 import Testimonials from "@modules/home/components/testimonials"
 import { getRegion } from "@lib/data/regions"
@@ -32,8 +35,11 @@ export default async function Home(props: {
   return (
     <>
       <HeroSlider slides={heroSlides} />
+      <PriceLedCategories region={region} />
+      <CategoryShowcase />
       <WhyUs />
       <FeaturedProducts region={region} />
+      <PromoBanner />
       <LatestProducts region={region} />
       <Testimonials />
     </>

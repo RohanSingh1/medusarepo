@@ -24,7 +24,7 @@ const Testimonials = async () => {
         {testimonials.map(({ id, name, location, quote, rating }) => (
           <div
             key={id}
-            className="flex flex-col gap-4 rounded-large border border-ui-border-base p-6 bg-ui-bg-subtle"
+            className="flex flex-col gap-4 rounded-large border-t-4 border-brand-primary bg-ui-bg-subtle p-6 shadow-elevation-card-rest"
           >
             <div className="flex gap-1">
               {Array.from({ length: 5 }).map((_, i) => (

@@ -49,7 +49,7 @@ const HeroSlider = ({ slides }: { slides: HeroSlide[] }) => {
               {slides.map((slide) => (
                 <div key={slide.id} className="flex-[0_0_100%] flex flex-col gap-4">
                   {slide.eyebrow && (
-                    <span className="inline-flex w-fit items-center rounded-full bg-ui-tag-neutral-bg px-3 py-1 text-small-semi uppercase tracking-wider text-ui-tag-neutral-text">
+                    <span className="inline-flex w-fit items-center rounded-full bg-brand-secondary/20 px-3 py-1 text-small-semi uppercase tracking-wider text-brand-primary">
                       {slide.eyebrow}
                     </span>
                   )}
@@ -98,7 +98,7 @@ const HeroSlider = ({ slides }: { slides: HeroSlide[] }) => {
             <div className="flex-1 h-1 rounded-full bg-ui-bg-base overflow-hidden max-w-[140px]">
               <div
                 key={selectedIndex}
-                className="h-full bg-ui-fg-base rounded-full animate-hero-progress"
+                className="h-full bg-brand-primary rounded-full animate-hero-progress"
                 style={{ animationDuration: `${AUTOPLAY_INTERVAL_MS}ms` }}
               />
             </div>
