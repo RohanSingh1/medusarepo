@@ -1,22 +1,21 @@
 import { Metadata } from "next"
 
-import HeroSlider from "@modules/home/components/hero-slider"
-import CategoryMarquee from "@modules/home/components/category-marquee"
+import Hero from "@modules/home/components/hero"
+import Marquee from "@modules/home/components/marquee"
 import Story from "@modules/home/components/story"
-import FeaturedProducts from "@modules/home/components/featured-products"
-import CategoryExplorer from "@modules/home/components/category-explorer"
+import Collection from "@modules/home/components/collection"
+import Experience from "@modules/home/components/experience"
+import InsideTheCar from "@modules/home/components/inside-the-car"
 import WhyUs from "@modules/home/components/why-us"
 import Testimonials from "@modules/home/components/testimonials"
-import PromoBanner from "@modules/home/components/promo-banner"
+import Journal from "@modules/home/components/journal"
+import CtaBanner from "@modules/home/components/cta-banner"
 import { getRegion } from "@lib/data/regions"
-import { listCategories } from "@lib/data/categories"
-import { listProducts } from "@lib/data/products"
-import { listHeroSlides, listTestimonials } from "@lib/data/homepage-content"
 
 export const metadata: Metadata = {
-  title: "TFO - Tile Factory Outlet",
+  title: "AURA - Fragrance for Every Drive",
   description:
-    "Sydney's tile factory outlet - porcelain, ceramic, natural stone and mosaic tiles at factory direct prices.",
+    "Seven fragrances composed for the car cabin. Hand-blended oils, a machined glass vessel, and a diffusion system tuned to the air of a moving car.",
 }
 
 export default async function Home(props: {
@@ -32,50 +31,18 @@ export default async function Home(props: {
     return null
   }
 
-  const [heroSlides, allCategories, testimonials, { response: catalog }] =
-    await Promise.all([
-      listHeroSlides(),
-      listCategories({ limit: 100 }),
-      listTestimonials(),
-      listProducts({ regionId: region.id, queryParams: { limit: 1 } }),
-    ])
-
-  const topLevelCategoryCount = allCategories.filter(
-    (c) => !c.parent_category_id
-  ).length
-
-  const avgRating = testimonials.length
-    ? testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length
-    : null
-
-  const roundedDown = (n: number, step: number) => {
-    const floored = Math.floor(n / step) * step
-    return floored > 0 ? `${floored}+` : `${n}`
-  }
-
-  const stats = [
-    { value: roundedDown(catalog.count, 10), label: "Tiles in our range" },
-    { value: roundedDown(topLevelCategoryCount, 5), label: "Categories to browse" },
-    ...(avgRating
-      ? [
-          {
-            value: avgRating.toFixed(1),
-            label: `From ${testimonials.length} review${testimonials.length === 1 ? "" : "s"}`,
-          },
-        ]
-      : []),
-  ]
-
   return (
     <>
-      <HeroSlider slides={heroSlides} stats={stats} />
-      <CategoryMarquee />
-      <Story region={region} />
-      <FeaturedProducts region={region} />
-      <CategoryExplorer region={region} />
+      <Hero region={region} />
+      <Marquee region={region} />
+      <Story />
+      <Collection region={region} />
+      <Experience region={region} />
+      <InsideTheCar />
       <WhyUs />
       <Testimonials />
-      <PromoBanner region={region} />
+      <Journal />
+      <CtaBanner />
     </>
   )
 }

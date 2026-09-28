@@ -1,17 +1,21 @@
-import { listCategories } from "@lib/data/categories"
+import { HttpTypes } from "@medusajs/types"
 
-// Top-level categories only (no parent_category_id) keep the ticker to real,
-// meaningful names instead of the full ~60-category tree.
-export default async function CategoryMarquee() {
-  const categories = await listCategories({ limit: 100 })
+import { listProducts } from "@lib/data/products"
 
-  const names = categories
-    .filter((c) => !c.parent_category_id)
-    .map((c) => c.name)
+export default async function Marquee({
+  region,
+}: {
+  region: HttpTypes.StoreRegion
+}) {
+  const {
+    response: { products },
+  } = await listProducts({
+    regionId: region.id,
+    queryParams: { limit: 20, fields: "title" },
+  })
 
-  if (names.length < 4) {
-    return null
-  }
+  const names = products.map((p) => p.title)
+  if (names.length < 2) return null
 
   // Doubled so the CSS translateX(-50%) loop has no visible seam.
   const looped = [...names, ...names]

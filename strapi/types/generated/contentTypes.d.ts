@@ -548,6 +548,10 @@ export interface ApiWhyUsItemWhyUsItem extends Struct.CollectionTypeSchema {
         'Headset',
         'Leaf',
         'MapPin',
+        'Droplet',
+        'Sparkles',
+        'Wind',
+        'Car',
       ]
     > &
       Schema.Attribute.Required &

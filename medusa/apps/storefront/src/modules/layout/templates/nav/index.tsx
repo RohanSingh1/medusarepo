@@ -8,6 +8,13 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 
+const NAV_LINKS = [
+  { label: "Collection", href: "/store" },
+  { label: "Discover", href: "/#experience" },
+  { label: "Our Story", href: "/#story" },
+  { label: "Journal", href: "/#journal" },
+]
+
 export default async function Nav() {
   const [regions, locales, currentLocale] = await Promise.all([
     listRegions().then((regions: StoreRegion[]) => regions),
@@ -17,33 +24,31 @@ export default async function Nav() {
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
-        <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
-          <div className="flex-1 basis-0 h-full flex items-center">
-            <div className="h-full">
-              <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
-            </div>
-          </div>
+      <header className="relative h-[76px] mx-auto border-b duration-200 bg-white border-ui-border-base">
+        <nav className="content-container flex items-center gap-10 w-full h-full">
+          <LocalizedClientLink
+            href="/"
+            className="font-display text-2xl tracking-[0.22em] text-ui-fg-base mr-auto"
+            data-testid="nav-store-link"
+          >
+            AURA
+          </LocalizedClientLink>
 
-          <div className="flex items-center h-full">
-            <LocalizedClientLink
-              href="/"
-              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
-              data-testid="nav-store-link"
-            >
-              Medusa Store
-            </LocalizedClientLink>
-          </div>
-
-          <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
-            <div className="hidden small:flex items-center gap-x-6 h-full">
+          <div className="hidden small:flex items-center gap-8 h-full">
+            {NAV_LINKS.map((link) => (
               <LocalizedClientLink
-                className="hover:text-ui-fg-base"
-                href="/account"
-                data-testid="nav-account-link"
+                key={link.label}
+                href={link.href}
+                className="text-small-regular font-medium text-ui-fg-subtle hover:text-brand-primary transition-colors"
               >
-                Account
+                {link.label}
               </LocalizedClientLink>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-4 h-full">
+            <div className="h-full flex items-center">
+              <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
             </div>
             <Suspense
               fallback={
