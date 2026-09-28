@@ -1,6 +1,7 @@
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
-import { Poppins, Source_Serif_4 } from "next/font/google"
+import { Poppins } from "next/font/google"
+import localFont from "next/font/local"
 import "styles/globals.css"
 
 const poppins = Poppins({
@@ -10,16 +11,11 @@ const poppins = Poppins({
   display: "swap",
 })
 
-// Display font for headings/eyebrows/stat numbers. Requested stack is
-// "Publico Banner", "Source Serif 4", "Playfair Display", Georgia, serif -
-// Publico Banner is a commercial Commercial Type foundry font, not on Google
-// Fonts, so it can't be loaded without a licensed webfont file. It stays
-// first in the CSS stack (see tailwind.config.js) so a licensed @font-face
-// added later takes over automatically; Source Serif 4 is what actually
-// renders today.
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+// Display font for headings/eyebrows/stat numbers - the real, licensed
+// Publico Banner file from the org's design system (../fonts), not a
+// Google Fonts stand-in.
+const publicoBanner = localFont({
+  src: "../fonts/PublicoBanner-Roman.otf",
   variable: "--font-display",
   display: "swap",
 })
@@ -38,7 +34,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html
       lang="en"
       data-mode="light"
-      className={`${poppins.variable} ${sourceSerif.variable}`}
+      className={`${poppins.variable} ${publicoBanner.variable}`}
     >
       <body>
         <main className="relative">{props.children}</main>
