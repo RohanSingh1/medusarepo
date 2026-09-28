@@ -17,14 +17,14 @@ export default async function CategoryMarquee() {
   const looped = [...names, ...names]
 
   return (
-    <div className="overflow-hidden border-y border-ui-border-base py-5 bg-ui-bg-subtle">
+    <div className="overflow-hidden py-5">
       <div className="flex w-max animate-marquee gap-10 whitespace-nowrap">
         {looped.map((name, i) => (
           <div key={i} className="flex items-center gap-10">
-            <span className="text-large-semi uppercase tracking-wide text-ui-fg-muted">
+            <span className="text-large-semi uppercase tracking-wide text-ui-fg-muted/40">
               {name}
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-secondary" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
           </div>
         ))}
       </div>

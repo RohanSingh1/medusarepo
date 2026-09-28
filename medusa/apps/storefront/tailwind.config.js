@@ -20,11 +20,17 @@ module.exports = {
         padding: "padding-top padding-right padding-bottom padding-left",
       },
       colors: {
+        // AURA design reference palette (per client request - replaces the
+        // earlier navy/green brand pass wholesale).
         brand: {
-          primary: "#0F2942",
-          "primary-hover": "#193C5C",
-          secondary: "#9FCC6D",
-          "secondary-hover": "#8BBE55",
+          primary: "#e74777", // main CTA / accent pink
+          "primary-hover": "#d13a67",
+          secondary: "#f6c5cd", // soft pink, light fills
+          "secondary-hover": "#eab3c0",
+          dark: "#3B1A33", // ink - dark section backgrounds, footer
+          "dark-hover": "#2c1326",
+          purple: "#753666", // secondary brand purple - hero panel, badges
+          cream: "#eae5de", // alternating light section background
         },
         grey: {
           0: "#FFFFFF",

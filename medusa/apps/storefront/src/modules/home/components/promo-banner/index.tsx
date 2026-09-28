@@ -20,16 +20,16 @@ export default async function PromoBanner({
 
   return (
     <div className="content-container py-12 small:py-16">
-      <div className="relative overflow-hidden rounded-large bg-brand-primary">
+      <div className="relative overflow-hidden rounded-[32px] bg-brand-dark">
         {backgroundImage && (
           <div
             className="absolute inset-0 bg-cover bg-center opacity-25"
             style={{ backgroundImage: `url(${backgroundImage})` }}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-primary via-brand-primary/80 to-brand-primary/40" />
-        <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full bg-brand-secondary/30 blur-3xl animate-orbit" />
-        <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-white/10 blur-3xl animate-orbit-reverse" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-brand-dark/40" />
+        <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full bg-brand-primary/50 blur-3xl animate-orbit" />
+        <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-brand-secondary/40 blur-3xl animate-orbit-reverse" />
 
         <div className="relative px-8 py-12 small:px-16 small:py-20 flex flex-col items-center text-center gap-4">
           <Heading level="h2" className="text-white text-2xl-semi small:text-3xl-semi">
@@ -40,7 +40,7 @@ export default async function PromoBanner({
             natural stone tiles at outlet prices.
           </Text>
           <LocalizedClientLink href="/store">
-            <Button variant="secondary" size="large" className="mt-2">
+            <Button variant="primary" size="large" className="mt-2">
               Shop the Full Range
             </Button>
           </LocalizedClientLink>

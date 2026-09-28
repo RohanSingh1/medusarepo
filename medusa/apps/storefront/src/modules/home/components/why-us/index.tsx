@@ -38,7 +38,7 @@ const WhyUs = async () => {
   }
 
   return (
-    <div className="bg-brand-primary">
+    <div className="bg-brand-purple">
       <div className="content-container py-12 small:py-20">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-12">
           <div>
@@ -51,7 +51,7 @@ const WhyUs = async () => {
             </Text>
           </div>
           <LocalizedClientLink href="/store" className="w-fit">
-            <Button variant="secondary">Shop Now</Button>
+            <Button variant="primary">Shop Now</Button>
           </LocalizedClientLink>
         </div>
         <div className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-6 gap-x-6 gap-y-10">
@@ -62,7 +62,7 @@ const WhyUs = async () => {
                 {i < items.length - 1 && (
                   <div className="hidden small:block absolute top-7 left-[-50%] right-[-50%] h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
                 )}
-                <div className="relative z-10 mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-brand-primary ring-2 ring-white/50 ring-offset-4 ring-offset-brand-primary">
+                <div className="relative z-10 mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-brand-purple ring-2 ring-white/60 ring-offset-4 ring-offset-brand-purple">
                   <Icon size={22} strokeWidth={2} className="text-brand-secondary" />
                 </div>
                 <Text className="text-white text-base-semi">{title}</Text>

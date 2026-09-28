@@ -24,8 +24,8 @@ const Testimonials = async () => {
         {testimonials.map(({ id, name, location, quote, rating }, i) => (
           <div
             key={id}
-            className={`flex flex-col gap-4 rounded-large border-t-4 border-brand-primary p-6 shadow-elevation-card-rest transition-transform duration-300 ease-out hover:[rotate:0deg] hover:-translate-y-1.5 hover:scale-[1.02] ${
-              i % 2 === 0 ? "bg-ui-bg-subtle" : "bg-brand-secondary/15"
+            className={`flex flex-col gap-4 rounded-large p-6 shadow-elevation-card-rest transition-transform duration-300 ease-out hover:[rotate:0deg] hover:-translate-y-1.5 hover:scale-[1.02] ${
+              i % 2 === 0 ? "bg-brand-cream" : "bg-brand-secondary/60"
             }`}
             style={{ rotate: `${i % 2 === 0 ? -1 : 1}deg` }}
           >
@@ -36,7 +36,7 @@ const Testimonials = async () => {
                   size={16}
                   className={
                     i < rating
-                      ? "fill-yellow-400 text-yellow-400"
+                      ? "fill-brand-primary text-brand-primary"
                       : "text-ui-border-base"
                   }
                 />

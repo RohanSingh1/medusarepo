@@ -65,8 +65,8 @@ export default async function FeaturedProducts({
             tilt={i % 2 === 0 ? -1.5 : 1.5}
           />
         ))}
-        <div className="relative overflow-hidden rounded-large bg-brand-primary p-6 flex flex-col justify-center gap-4">
-          <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-brand-secondary/25 blur-2xl animate-orbit" />
+        <div className="relative overflow-hidden rounded-large bg-brand-dark p-6 flex flex-col justify-center gap-4">
+          <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-brand-primary/40 blur-2xl animate-orbit" />
           <Text className="text-white text-large-semi relative">
             Need help choosing?
           </Text>
@@ -83,7 +83,7 @@ export default async function FeaturedProducts({
             ))}
           </div>
           <LocalizedClientLink href="/store" className="relative w-fit">
-            <span className="inline-flex items-center gap-2 text-small-semi text-brand-secondary hover:text-white transition-colors">
+            <span className="inline-flex items-center gap-2 text-small-semi text-brand-primary hover:text-white transition-colors">
               Start browsing →
             </span>
           </LocalizedClientLink>
