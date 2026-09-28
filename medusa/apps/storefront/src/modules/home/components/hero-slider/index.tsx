@@ -10,7 +10,15 @@ import { HeroSlide } from "@lib/data/homepage-content"
 
 const AUTOPLAY_INTERVAL_MS = 6000
 
-const HeroSlider = ({ slides }: { slides: HeroSlide[] }) => {
+export type HeroStat = { value: string; label: string }
+
+const HeroSlider = ({
+  slides,
+  stats,
+}: {
+  slides: HeroSlide[]
+  stats?: HeroStat[]
+}) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
   const [imageEmblaRef, imageEmblaApi] = useEmblaCarousel({ loop: true })
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -103,6 +111,21 @@ const HeroSlider = ({ slides }: { slides: HeroSlide[] }) => {
               />
             </div>
           </div>
+
+          {stats && stats.length > 0 && (
+            <div className="flex gap-8 flex-wrap mt-6 pt-6 border-t border-ui-border-base">
+              {stats.map((stat) => (
+                <div key={stat.label}>
+                  <div className="text-3xl font-semibold text-ui-fg-base leading-none">
+                    {stat.value}
+                  </div>
+                  <div className="text-small-regular text-ui-fg-subtle mt-1.5">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Image panel */}

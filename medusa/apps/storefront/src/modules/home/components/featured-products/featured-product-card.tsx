@@ -7,10 +7,10 @@ import { Text } from "@modules/common/components/ui"
 
 const FeaturedProductCard = ({
   product,
-  size = "small",
+  tilt,
 }: {
   product: HttpTypes.StoreProduct
-  size?: "large" | "small"
+  tilt: number
 }) => {
   const { cheapestPrice } = getProductPrice({ product })
   const image = product.thumbnail || product.images?.[0]?.url
@@ -18,36 +18,24 @@ const FeaturedProductCard = ({
   return (
     <LocalizedClientLink
       href={`/products/${product.handle}`}
-      className="group relative block w-full h-full overflow-hidden rounded-large bg-ui-bg-subtle"
+      className="group block h-full overflow-hidden rounded-large bg-ui-bg-subtle shadow-elevation-card-rest transition-[rotate,transform,box-shadow] duration-300 ease-out hover:[rotate:0deg] hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-elevation-card-hover"
+      style={{ rotate: `${tilt}deg` }}
     >
-      {image && (
-        <Image
-          src={image}
-          alt={product.title}
-          fill
-          sizes={
-            size === "large"
-              ? "(max-width: 1024px) 100vw, 50vw"
-              : "(max-width: 1024px) 50vw, 25vw"
-          }
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-        />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-      <div
-        className={`absolute inset-x-0 bottom-0 flex flex-col gap-1 p-4 small:p-6 ${
-          size === "large" ? "small:gap-2" : ""
-        }`}
-      >
-        <Text
-          className={`text-white font-semibold leading-tight ${
-            size === "large" ? "text-large-semi small:text-2xl-semi" : "text-base-semi"
-          }`}
-        >
-          {product.title}
-        </Text>
+      <div className="relative aspect-square w-full overflow-hidden">
+        {image && (
+          <Image
+            src={image}
+            alt={product.title}
+            fill
+            sizes="(max-width: 1024px) 50vw, 25vw"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          />
+        )}
+      </div>
+      <div className="flex items-baseline justify-between gap-2 p-4">
+        <Text className="text-base-semi truncate">{product.title}</Text>
         {cheapestPrice && (
-          <Text className="text-white/80 text-small-regular">
+          <Text className="text-small-regular text-ui-fg-subtle whitespace-nowrap">
             {cheapestPrice.calculated_price}
           </Text>
         )}

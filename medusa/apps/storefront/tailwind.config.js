@@ -150,9 +150,20 @@ module.exports = {
           "0%": { width: "0%" },
           "100%": { width: "100%" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        orbit: {
+          "0%": { transform: "rotate(0deg) translateX(30px) rotate(0deg)" },
+          "100%": { transform: "rotate(360deg) translateX(30px) rotate(-360deg)" },
+        },
       },
       animation: {
         "hero-progress": "hero-progress linear forwards",
+        marquee: "marquee 28s linear infinite",
+        orbit: "orbit 24s linear infinite",
+        "orbit-reverse": "orbit 30s linear infinite reverse",
         ring: "ring 2.2s cubic-bezier(0.5, 0, 0.5, 1) infinite",
         "fade-in-right":
           "fade-in-right 0.3s cubic-bezier(0.5, 0, 0.5, 1) forwards",

@@ -20,11 +20,14 @@ const Testimonials = async () => {
           Trusted by tradies and homeowners across Sydney.
         </Text>
       </div>
-      <div className="grid grid-cols-1 small:grid-cols-3 gap-6">
-        {testimonials.map(({ id, name, location, quote, rating }) => (
+      <div className="grid grid-cols-1 small:grid-cols-3 gap-6 py-2">
+        {testimonials.map(({ id, name, location, quote, rating }, i) => (
           <div
             key={id}
-            className="flex flex-col gap-4 rounded-large border-t-4 border-brand-primary bg-ui-bg-subtle p-6 shadow-elevation-card-rest"
+            className={`flex flex-col gap-4 rounded-large border-t-4 border-brand-primary p-6 shadow-elevation-card-rest transition-transform duration-300 ease-out hover:[rotate:0deg] hover:-translate-y-1.5 hover:scale-[1.02] ${
+              i % 2 === 0 ? "bg-ui-bg-subtle" : "bg-brand-secondary/15"
+            }`}
+            style={{ rotate: `${i % 2 === 0 ? -1 : 1}deg` }}
           >
             <div className="flex gap-1">
               {Array.from({ length: 5 }).map((_, i) => (
