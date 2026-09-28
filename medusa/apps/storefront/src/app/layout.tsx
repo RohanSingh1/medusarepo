@@ -1,22 +1,29 @@
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
-import { Poppins } from "next/font/google"
 import localFont from "next/font/local"
 import "styles/globals.css"
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+// Body font - the design system's real Inter variable file, replacing the
+// earlier Google Fonts Poppins stand-in.
+const inter = localFont({
+  src: "../fonts/Inter-Variable.ttf",
+  variable: "--font-body",
   display: "swap",
 })
 
 // Display font for headings/eyebrows/stat numbers - the real, licensed
-// Publico Banner file from the org's design system (../fonts), not a
-// Google Fonts stand-in.
+// Publico Banner file from the org's design system.
 const publicoBanner = localFont({
   src: "../fonts/PublicoBanner-Roman.otf",
   variable: "--font-display",
+  display: "swap",
+})
+
+// Script accent font for the AURA wordmark only (logo/header/footer) - a
+// commercially-licensed copy per the org, despite the source filename.
+const gellatio = localFont({
+  src: "../fonts/Gellatio.ttf",
+  variable: "--font-script",
   display: "swap",
 })
 
@@ -34,7 +41,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html
       lang="en"
       data-mode="light"
-      className={`${poppins.variable} ${publicoBanner.variable}`}
+      className={`${inter.variable} ${publicoBanner.variable} ${gellatio.variable}`}
     >
       <body>
         <main className="relative">{props.children}</main>

@@ -70,9 +70,11 @@ module.exports = {
         "3xl": "2rem",
       },
       fontFamily: {
+        // var(--font-body) is the design system's real Inter variable file
+        // (see layout.tsx).
         sans: [
-          "var(--font-poppins)",
-          "Poppins",
+          "var(--font-body)",
+          "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",
@@ -81,15 +83,18 @@ module.exports = {
           "Ubuntu",
           "sans-serif",
         ],
-        // var(--font-display) is the real, licensed Publico Banner file
-        // (see layout.tsx). Playfair Display/Georgia are just degradation
-        // fallbacks if the local font ever fails to load.
+        // var(--font-display) is the real, licensed Publico Banner file.
+        // Playfair Display/Georgia are just degradation fallbacks if the
+        // local font ever fails to load.
         display: [
           "var(--font-display)",
           '"Playfair Display"',
           "Georgia",
           "serif",
         ],
+        // Script accent font for the AURA wordmark only - a commercially
+        // licensed Gellatio file (see layout.tsx).
+        script: ["var(--font-script)", "cursive"],
       },
       keyframes: {
         ring: {

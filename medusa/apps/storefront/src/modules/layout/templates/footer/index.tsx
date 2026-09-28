@@ -31,7 +31,7 @@ export default async function Footer() {
         <div className="col-span-2 small:col-span-1">
           <LocalizedClientLink
             href="/"
-            className="font-display text-2xl tracking-[0.22em] text-white"
+            className="font-script text-4xl text-white"
           >
             AURA
           </LocalizedClientLink>

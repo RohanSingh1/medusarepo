@@ -96,7 +96,7 @@ export default async function Hero({
 
         <div className="relative h-[280px] small:h-auto overflow-hidden rounded-[32px] bg-gradient-to-br from-brand-dark via-brand-purple to-brand-dark">
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="font-display text-white/15 text-[18vw] small:text-[7vw] tracking-[0.3em]">
+            <span className="font-script text-white/20 text-[26vw] small:text-[11vw]">
               AURA
             </span>
           </div>

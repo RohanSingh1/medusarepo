@@ -28,7 +28,7 @@ export default async function Nav() {
         <nav className="content-container flex items-center gap-10 w-full h-full">
           <LocalizedClientLink
             href="/"
-            className="font-display text-2xl tracking-[0.22em] text-ui-fg-base mr-auto"
+            className="font-script text-4xl text-brand-primary mr-auto"
             data-testid="nav-store-link"
           >
             AURA
