@@ -63,7 +63,7 @@ const HeroSlider = ({
                         {slide.eyebrow}
                       </span>
                     )}
-                    <h1 className="text-white text-3xl small:text-5xl font-semibold leading-[1.05] tracking-tight">
+                    <h1 className="font-display text-white text-3xl small:text-5xl font-medium leading-[1.05] tracking-tight">
                       {slide.title}
                     </h1>
                     {slide.subtitle && (
@@ -118,7 +118,7 @@ const HeroSlider = ({
               <div className="flex gap-8 flex-wrap mt-2 pt-6 border-t border-white/20">
                 {stats.map((stat) => (
                   <div key={stat.label}>
-                    <div className="text-3xl font-semibold text-white leading-none">
+                    <div className="font-display text-3xl font-medium text-white leading-none">
                       {stat.value}
                     </div>
                     <div className="text-small-regular text-white/70 mt-1.5">

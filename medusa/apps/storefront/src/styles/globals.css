@@ -12,6 +12,15 @@
     sans-serif !important;
 }
 
+/* Higher specificity than the `*` rule above, so `font-display` usage
+   (headings/eyebrows/stat numbers) isn't clobbered by it. Publico Banner
+   isn't loaded (no licensed webfont - see layout.tsx); var(--font-display)
+   is Source Serif 4, the actual rendered font today. */
+.font-display {
+  font-family: "Publico Banner", var(--font-display), "Playfair Display",
+    Georgia, serif !important;
+}
+
 @layer utilities {
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {

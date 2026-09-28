@@ -81,6 +81,17 @@ module.exports = {
           "Ubuntu",
           "sans-serif",
         ],
+        // "Publico Banner" first per request - not loadable today (no
+        // licensed webfont), but a future @font-face under that exact name
+        // would take over automatically. var(--font-display) is Source
+        // Serif 4 (see layout.tsx), the actual rendered font until then.
+        display: [
+          '"Publico Banner"',
+          "var(--font-display)",
+          '"Playfair Display"',
+          "Georgia",
+          "serif",
+        ],
       },
       keyframes: {
         ring: {

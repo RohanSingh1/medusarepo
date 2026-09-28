@@ -2,20 +2,16 @@ import { Metadata } from "next"
 
 import HeroSlider from "@modules/home/components/hero-slider"
 import CategoryMarquee from "@modules/home/components/category-marquee"
-import PriceLedCategories from "@modules/home/components/price-led-categories"
-import CategoryShowcase from "@modules/home/components/category-showcase"
-import WhyUs from "@modules/home/components/why-us"
+import Story from "@modules/home/components/story"
 import FeaturedProducts from "@modules/home/components/featured-products"
-import PromoBanner from "@modules/home/components/promo-banner"
-import LatestProducts from "@modules/home/components/latest-products"
+import CategoryExplorer from "@modules/home/components/category-explorer"
+import WhyUs from "@modules/home/components/why-us"
 import Testimonials from "@modules/home/components/testimonials"
+import PromoBanner from "@modules/home/components/promo-banner"
 import { getRegion } from "@lib/data/regions"
 import { listCategories } from "@lib/data/categories"
 import { listProducts } from "@lib/data/products"
-import {
-  listHeroSlides,
-  listTestimonials,
-} from "@lib/data/homepage-content"
+import { listHeroSlides, listTestimonials } from "@lib/data/homepage-content"
 
 export const metadata: Metadata = {
   title: "TFO - Tile Factory Outlet",
@@ -74,13 +70,12 @@ export default async function Home(props: {
     <>
       <HeroSlider slides={heroSlides} stats={stats} />
       <CategoryMarquee />
-      <PriceLedCategories region={region} />
-      <CategoryShowcase />
-      <WhyUs />
+      <Story region={region} />
       <FeaturedProducts region={region} />
-      <PromoBanner region={region} />
-      <LatestProducts region={region} />
+      <CategoryExplorer region={region} />
+      <WhyUs />
       <Testimonials />
+      <PromoBanner region={region} />
     </>
   )
 }

@@ -21,7 +21,7 @@ export default async function CategoryMarquee() {
       <div className="flex w-max animate-marquee gap-10 whitespace-nowrap">
         {looped.map((name, i) => (
           <div key={i} className="flex items-center gap-10">
-            <span className="text-large-semi uppercase tracking-wide text-ui-fg-muted/40">
+            <span className="font-display text-large-semi uppercase tracking-wide text-ui-fg-muted/40">
               {name}
             </span>
             <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
