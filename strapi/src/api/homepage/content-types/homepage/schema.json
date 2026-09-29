@@ -41,9 +41,21 @@
     "collectionFinderHeading": { "type": "string" },
     "collectionFinderQuestions": { "type": "json" },
     "collectionFinderCtaLabel": { "type": "string" },
+    "insideCarImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
     "ctaBannerHeadline": { "type": "text" },
     "ctaBannerBody": { "type": "text" },
     "ctaBannerButtonLabel": { "type": "string" },
-    "ctaBannerButtonHref": { "type": "string" }
+    "ctaBannerButtonHref": { "type": "string" },
+    "ctaBannerImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
   }
 }

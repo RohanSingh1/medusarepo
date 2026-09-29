@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 import { getHomepageContent } from "@lib/data/homepage-content"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { Button, Heading } from "@modules/common/components/ui"
@@ -11,7 +13,17 @@ export default async function CtaBanner() {
         <div className="absolute inset-0 bg-gradient-to-br from-brand-plum/60 via-brand-deep-plum to-brand-deep-plum" />
 
         <div className="relative grid grid-cols-1 small:grid-cols-2 h-full pointer-events-none">
-          <div className="min-h-[220px] small:min-h-[420px]" />
+          <div className="relative min-h-[220px] small:min-h-[420px]">
+            {content.ctaBannerImageUrl && (
+              <Image
+                src={content.ctaBannerImageUrl}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            )}
+          </div>
 
           <div className="relative overflow-hidden bg-brand-deep-plum p-8 small:p-16 flex flex-col justify-center pointer-events-auto">
             <div className="absolute -top-[18%] -right-[12%] h-[300px] w-[300px] rounded-full bg-brand-pink/60 blur-2xl animate-orbit pointer-events-none" />

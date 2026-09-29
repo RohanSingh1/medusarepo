@@ -468,6 +468,7 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     ctaBannerButtonHref: Schema.Attribute.String;
     ctaBannerButtonLabel: Schema.Attribute.String;
     ctaBannerHeadline: Schema.Attribute.Text;
+    ctaBannerImage: Schema.Attribute.Media<'images'>;
     heroEyebrow: Schema.Attribute.String;
     heroHeadlineLine1: Schema.Attribute.String & Schema.Attribute.Required;
     heroHeadlineLine2: Schema.Attribute.String;
@@ -475,6 +476,7 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     heroPrimaryCtaHref: Schema.Attribute.String;
     heroPrimaryCtaLabel: Schema.Attribute.String;
     heroSubcopy: Schema.Attribute.Text;
+    insideCarImage: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -547,6 +549,7 @@ export interface ApiJournalEntryJournalEntry
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    excerpt: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

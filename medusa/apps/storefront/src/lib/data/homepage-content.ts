@@ -33,10 +33,12 @@ export type HomepageContent = {
   collectionFinderHeading: string
   collectionFinderQuestions: string[]
   collectionFinderCtaLabel: string
+  insideCarImageUrl: string | null
   ctaBannerHeadline: string
   ctaBannerBody: string
   ctaBannerButtonLabel: string
   ctaBannerButtonHref: string
+  ctaBannerImageUrl: string | null
 }
 
 const FALLBACK_HOMEPAGE: HomepageContent = {
@@ -67,11 +69,13 @@ const FALLBACK_HOMEPAGE: HomepageContent = {
     "Scents you already wear",
   ],
   collectionFinderCtaLabel: "Discover your scent →",
+  insideCarImageUrl: null,
   ctaBannerHeadline: "Make Every Drive Memorable",
   ctaBannerBody:
     "Complimentary express delivery. Ninety-day satisfaction guarantee on every bottle.",
   ctaBannerButtonLabel: "Shop the Collection",
   ctaBannerButtonHref: "/store",
+  ctaBannerImageUrl: null,
 }
 
 export type WhyUsReason = {
@@ -207,6 +211,7 @@ export type JournalEntry = {
   id: number
   category: string
   title: string
+  excerpt: string
   accentColor: string
   thumbnailUrl: string | null
 }
@@ -216,6 +221,8 @@ const FALLBACK_JOURNAL_ENTRIES: JournalEntry[] = [
     id: 0,
     category: "Craft",
     title: "Why cabin heat destroys most fragrance",
+    excerpt:
+      "Most air fresheners are built for a room, not a windshield in direct sun. Here's why heat is the real enemy of scent longevity.",
     accentColor: "#6B5B43",
     thumbnailUrl: null,
   },
@@ -223,6 +230,8 @@ const FALLBACK_JOURNAL_ENTRIES: JournalEntry[] = [
     id: 1,
     category: "Guides",
     title: "Matching a scent to your interior",
+    excerpt:
+      "Leather, fabric and the size of your cabin all change how a fragrance actually wears day to day.",
     accentColor: "#14708F",
     thumbnailUrl: null,
   },
@@ -230,6 +239,8 @@ const FALLBACK_JOURNAL_ENTRIES: JournalEntry[] = [
     id: 2,
     category: "Studio",
     title: "Three days in Grasse with our perfumer",
+    excerpt:
+      "Inside the studio where AURA's compositions are built, tested and refined before they ever reach a bottle.",
     accentColor: "#8A5A17",
     thumbnailUrl: null,
   },
@@ -239,25 +250,33 @@ type StrapiMedia = { url: string } | null
 
 type StrapiHomepageEntry = Omit<
   Partial<HomepageContent>,
-  "heroImageUrl" | "storyImageUrl"
+  "heroImageUrl" | "storyImageUrl" | "insideCarImageUrl" | "ctaBannerImageUrl"
 > & {
   heroImage?: StrapiMedia
   storyImage?: StrapiMedia
+  insideCarImage?: StrapiMedia
+  ctaBannerImage?: StrapiMedia
 }
 
 export const getHomepageContent = async (): Promise<HomepageContent> => {
   return fetchStrapi<{ data: StrapiHomepageEntry | null }>("/homepage", {
     "populate[heroImage]": "true",
     "populate[storyImage]": "true",
+    "populate[insideCarImage]": "true",
+    "populate[ctaBannerImage]": "true",
   })
     .then(({ data }) => {
       if (!data) return FALLBACK_HOMEPAGE
-      const { heroImage, storyImage, ...rest } = data
+      const { heroImage, storyImage, insideCarImage, ctaBannerImage, ...rest } = data
       return {
         ...FALLBACK_HOMEPAGE,
         ...rest,
         heroImageUrl: toAbsoluteUrl(heroImage?.url) ?? FALLBACK_HOMEPAGE.heroImageUrl,
         storyImageUrl: toAbsoluteUrl(storyImage?.url) ?? FALLBACK_HOMEPAGE.storyImageUrl,
+        insideCarImageUrl:
+          toAbsoluteUrl(insideCarImage?.url) ?? FALLBACK_HOMEPAGE.insideCarImageUrl,
+        ctaBannerImageUrl:
+          toAbsoluteUrl(ctaBannerImage?.url) ?? FALLBACK_HOMEPAGE.ctaBannerImageUrl,
       }
     })
     .catch(() => FALLBACK_HOMEPAGE)
@@ -345,6 +364,7 @@ type StrapiJournalEntryEntry = {
   id: number
   category: string
   title: string
+  excerpt: string | null
   accentColor: string | null
   thumbnail?: StrapiMedia
 }
@@ -360,6 +380,7 @@ export const listJournalEntries = async (): Promise<JournalEntry[]> => {
             id: e.id,
             category: e.category,
             title: e.title,
+            excerpt: e.excerpt || "",
             accentColor: e.accentColor || "#3B1A33",
             thumbnailUrl: toAbsoluteUrl(e.thumbnail?.url),
           }))

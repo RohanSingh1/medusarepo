@@ -24,7 +24,7 @@ export default async function Journal() {
             className="rounded-[16px] overflow-hidden bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-transform duration-300 hover:-translate-y-1.5"
           >
             {entry.thumbnailUrl ? (
-              <div className="relative h-[160px]">
+              <div className="relative h-[300px]">
                 <Image
                   src={entry.thumbnailUrl}
                   alt={entry.title}
@@ -35,7 +35,7 @@ export default async function Journal() {
               </div>
             ) : (
               <div
-                className="h-[160px]"
+                className="h-[300px]"
                 style={{ backgroundColor: entry.accentColor }}
               />
             )}
@@ -47,6 +47,11 @@ export default async function Journal() {
               <p className="font-sans font-bold text-lg text-brand-deep-plum mt-2 leading-snug">
                 {entry.title}
               </p>
+              {entry.excerpt && (
+                <p className="text-sm text-brand-deep-plum/60 mt-2 leading-snug">
+                  {entry.excerpt}
+                </p>
+              )}
             </div>
           </div>
         ))}

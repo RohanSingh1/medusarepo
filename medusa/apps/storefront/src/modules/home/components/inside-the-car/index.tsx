@@ -1,8 +1,13 @@
-import { listInsideCarSteps } from "@lib/data/homepage-content"
+import Image from "next/image"
+
+import { getHomepageContent, listInsideCarSteps } from "@lib/data/homepage-content"
 import { Heading } from "@modules/common/components/ui"
 
 export default async function InsideTheCar() {
-  const steps = await listInsideCarSteps()
+  const [steps, content] = await Promise.all([
+    listInsideCarSteps(),
+    getHomepageContent(),
+  ])
 
   return (
     <div className="bg-brand-sand">
@@ -19,16 +24,16 @@ export default async function InsideTheCar() {
           </Heading>
         </div>
         <div className="grid grid-cols-1 small:grid-cols-2 gap-6">
-          <div className="relative rounded-[24px] overflow-hidden min-h-[320px] small:min-h-[400px] bg-gradient-to-br from-brand-plum via-brand-deep-plum to-brand-plum">
-            {steps.map((step) => (
-              <div
-                key={step.id}
-                className="absolute h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-pink shadow-[0_0_0_8px_rgba(231,71,119,0.28)] flex items-center justify-center text-sm font-semibold text-white"
-                style={{ top: step.pinTop, left: step.pinLeft }}
-              >
-                {step.stepNumber.replace("0", "")}
-              </div>
-            ))}
+          <div className="relative rounded-[24px] overflow-hidden h-[670px] bg-gradient-to-br from-brand-plum via-brand-deep-plum to-brand-plum">
+            {content.insideCarImageUrl && (
+              <Image
+                src={content.insideCarImageUrl}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            )}
           </div>
           <div className="flex flex-col gap-3 justify-center">
             {steps.map((step) => (
