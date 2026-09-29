@@ -35,9 +35,12 @@ export function Pagination({
   ) => (
     <button
       key={p}
-      className={clx("txt-xlarge-plus text-ui-fg-muted", {
-        "text-ui-fg-base hover:text-ui-fg-subtle": isCurrent,
-      })}
+      className={clx(
+        "h-10 w-10 rounded-full text-sm font-semibold transition-colors",
+        isCurrent
+          ? "bg-brand-pink text-white"
+          : "bg-brand-sand text-brand-deep-plum hover:bg-brand-blush/60"
+      )}
       disabled={isCurrent}
       onClick={() => handlePageChange(p)}
     >
@@ -49,7 +52,7 @@ export function Pagination({
   const renderEllipsis = (key: string) => (
     <span
       key={key}
-      className="txt-xlarge-plus text-ui-fg-muted items-center cursor-default"
+      className="text-sm text-brand-deep-plum/50 items-center cursor-default px-1"
     >
       ...
     </span>
@@ -108,7 +111,7 @@ export function Pagination({
   // Render the component
   return (
     <div className="flex justify-center w-full mt-12">
-      <div className="flex gap-3 items-end" data-testid={dataTestid}>{renderPageButtons()}</div>
+      <div className="flex gap-2 items-center" data-testid={dataTestid}>{renderPageButtons()}</div>
     </div>
   )
 }

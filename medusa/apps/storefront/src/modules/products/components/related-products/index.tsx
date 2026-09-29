@@ -2,6 +2,7 @@ import { listProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { isProductInStock } from "@lib/util/is-product-in-stock"
 import { HttpTypes } from "@medusajs/types"
+import { Heading } from "@modules/common/components/ui"
 import Product from "../product-preview"
 
 type RelatedProductsProps = {
@@ -38,10 +39,13 @@ export default async function RelatedProducts({
     queryParams,
     countryCode,
   }).then(({ response }) => {
-    return response.products.filter(
-      (responseProduct) =>
-        responseProduct.id !== product.id && isProductInStock(responseProduct)
-    )
+    return response.products
+      .filter(
+        (responseProduct) =>
+          responseProduct.id !== product.id &&
+          isProductInStock(responseProduct)
+      )
+      .slice(0, 4)
   })
 
   if (!products.length) {
@@ -49,17 +53,20 @@ export default async function RelatedProducts({
   }
 
   return (
-    <div className="product-page-constraint">
-      <div className="flex flex-col items-center text-center mb-16">
-        <span className="text-base-regular text-gray-600 mb-6">
-          Related products
+    <div>
+      <div className="flex flex-col items-center text-center mb-12">
+        <span className="font-script text-[44px] leading-none text-brand-pink">
+          You Might Also Like
         </span>
-        <p className="text-2xl-regular text-ui-fg-base max-w-lg">
-          You might also want to check out these products.
-        </p>
+        <Heading
+          level="h2"
+          className="font-display font-normal text-brand-deep-plum text-[32px] small:text-[44px] leading-[1.08] mt-3"
+        >
+          More from the collection
+        </Heading>
       </div>
 
-      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
+      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-5 small:gap-6">
         {products.map((product) => (
           <li key={product.id}>
             <Product region={region} product={product} />

@@ -22,10 +22,10 @@ export default function ProductPrice({
   }
 
   return (
-    <div className="flex flex-col text-ui-fg-base">
+    <div className="flex flex-col">
       <span
-        className={clx("text-xl-semi", {
-          "text-ui-fg-interactive": selectedPrice.price_type === "sale",
+        className={clx("font-sans font-bold text-2xl text-brand-deep-plum", {
+          "text-brand-pink": selectedPrice.price_type === "sale",
         })}
       >
         {!variant && "From "}
@@ -37,21 +37,19 @@ export default function ProductPrice({
         </span>
       </span>
       {selectedPrice.price_type === "sale" && (
-        <>
-          <p>
-            <span className="text-ui-fg-subtle">Original: </span>
-            <span
-              className="line-through"
-              data-testid="original-product-price"
-              data-value={selectedPrice.original_price_number}
-            >
-              {selectedPrice.original_price}
-            </span>
-          </p>
-          <span className="text-ui-fg-interactive">
+        <p className="text-sm text-brand-deep-plum/55 mt-1">
+          <span>Original: </span>
+          <span
+            className="line-through"
+            data-testid="original-product-price"
+            data-value={selectedPrice.original_price_number}
+          >
+            {selectedPrice.original_price}
+          </span>
+          <span className="text-brand-pink font-semibold ml-2">
             -{selectedPrice.percentage_diff}%
           </span>
-        </>
+        </p>
       )}
     </div>
   )

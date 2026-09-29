@@ -7,12 +7,12 @@ import { getFragranceMeta } from "@lib/util/fragrance"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ScentBottle from "@modules/home/components/scent-bottle"
 
-const CollectionProductCard = ({
+const FragranceProductCard = ({
   product,
   tilt,
 }: {
   product: HttpTypes.StoreProduct
-  tilt: number
+  tilt?: number
 }) => {
   const { cheapestPrice } = getProductPrice({ product })
   const { accent, tint, tagline } = getFragranceMeta(product)
@@ -21,7 +21,7 @@ const CollectionProductCard = ({
     <LocalizedClientLink
       href={`/products/${product.handle}`}
       className="group block h-full overflow-hidden rounded-[16px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-[rotate,transform,box-shadow] duration-300 ease-out hover:[rotate:0deg] hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-[0_12px_40px_rgba(59,26,51,0.10)]"
-      style={{ rotate: `${tilt}deg` }}
+      style={tilt ? { rotate: `${tilt}deg` } : undefined}
     >
       {product.thumbnail ? (
         <div className="relative aspect-square w-full">
@@ -48,7 +48,9 @@ const CollectionProductCard = ({
             </p>
           )}
         </div>
-        <p className="text-sm text-brand-deep-plum/55 mt-1.5">{tagline}</p>
+        {tagline && (
+          <p className="text-sm text-brand-deep-plum/55 mt-1.5">{tagline}</p>
+        )}
         <p className="text-sm font-semibold mt-4" style={{ color: accent }}>
           View fragrance
         </p>
@@ -57,4 +59,4 @@ const CollectionProductCard = ({
   )
 }
 
-export default CollectionProductCard
+export default FragranceProductCard

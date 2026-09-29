@@ -34,30 +34,27 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
   return (
     <>
-      <div
-        className="content-container  flex flex-col small:flex-row small:items-start py-6 relative"
-        data-testid="product-container"
-      >
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
-          <ProductInfo product={product} />
-          <ProductTabs product={product} features={features ?? []} />
-        </div>
-        <div className="block w-full relative">
+      <div className="content-container py-8 small:py-14" data-testid="product-container">
+        <div className="grid grid-cols-1 small:grid-cols-2 gap-10 small:gap-16">
           <ImageGallery images={images} />
+          <div className="flex flex-col gap-y-8">
+            <ProductInfo product={product} />
+            <ProductOnboardingCta />
+            <Suspense
+              fallback={
+                <ProductActions
+                  disabled={true}
+                  product={product}
+                  region={region}
+                />
+              }
+            >
+              <ProductActionsWrapper id={product.id} region={region} />
+            </Suspense>
+          </div>
         </div>
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-12">
-          <ProductOnboardingCta />
-          <Suspense
-            fallback={
-              <ProductActions
-                disabled={true}
-                product={product}
-                region={region}
-              />
-            }
-          >
-            <ProductActionsWrapper id={product.id} region={region} />
-          </Suspense>
+        <div className="mt-16 small:mt-24">
+          <ProductTabs product={product} features={features ?? []} />
         </div>
       </div>
       <div

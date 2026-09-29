@@ -5,7 +5,7 @@ import { getHomepageContent } from "@lib/data/homepage-content"
 import { isProductInStock } from "@lib/util/is-product-in-stock"
 import { Heading } from "@modules/common/components/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import CollectionProductCard from "./product-card"
+import FragranceProductCard from "@modules/common/components/fragrance-product-card"
 
 export default async function Collection({
   region,
@@ -52,7 +52,7 @@ export default async function Collection({
       </div>
       <div className="grid grid-cols-2 small:grid-cols-4 gap-5 small:gap-6">
         {inStock.map((product: HttpTypes.StoreProduct, i: number) => (
-          <CollectionProductCard
+          <FragranceProductCard
             key={product.id}
             product={product}
             tilt={i % 2 === 0 ? -1.5 : 1.5}

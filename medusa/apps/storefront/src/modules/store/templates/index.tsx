@@ -4,6 +4,7 @@ import { OptionValueIds } from "@lib/util/product-option-filters"
 import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { Heading } from "@modules/common/components/ui"
 
 import PaginatedProducts from "./paginated-products"
 
@@ -22,23 +23,34 @@ const StoreTemplate = ({
   const sort = sortBy || "created_at"
 
   return (
-    <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
-      data-testid="category-container"
-    >
-      <RefinementList sortBy={sort} />
-      <div className="w-full">
-        <div className="mb-8 text-2xl-semi">
-          <h1 data-testid="store-page-title">All products</h1>
+    <div className="content-container py-10 small:py-16">
+      <div className="mb-10">
+        <span className="font-script text-[44px] leading-none text-brand-pink">
+          Shop
+        </span>
+        <Heading
+          level="h2"
+          className="font-display font-normal text-brand-deep-plum text-[32px] small:text-[48px] leading-[1.08] mt-3"
+          data-testid="store-page-title"
+        >
+          The Full Collection
+        </Heading>
+      </div>
+      <div
+        className="flex flex-col small:flex-row small:items-start gap-8 small:gap-10"
+        data-testid="category-container"
+      >
+        <RefinementList sortBy={sort} />
+        <div className="w-full">
+          <Suspense fallback={<SkeletonProductGrid />}>
+            <PaginatedProducts
+              sortBy={sort}
+              page={pageNumber}
+              countryCode={countryCode}
+              optionValueIds={optionValueIds}
+            />
+          </Suspense>
         </div>
-        <Suspense fallback={<SkeletonProductGrid />}>
-          <PaginatedProducts
-            sortBy={sort}
-            page={pageNumber}
-            countryCode={countryCode}
-            optionValueIds={optionValueIds}
-          />
-        </Suspense>
       </div>
     </div>
   )

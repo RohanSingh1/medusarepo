@@ -56,16 +56,16 @@ const OptionsPicker = ({
 
   return (
     <div className="flex flex-col gap-y-4">
-      <div className="flex items-center justify-between px-1">
-        <span className="txt-compact-small-plus text-ui-fg-subtle">
-          Options
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-semibold text-brand-deep-plum">
+          Filter by
         </span>
       </div>
       <Accordion.Root
         type="multiple"
         value={openItems}
         onValueChange={(values) => setOpenItems(values as string[])}
-        className="flex flex-col gap-y-3 pr-6"
+        className="flex flex-col gap-y-1 divide-y divide-brand-deep-plum/10"
       >
         {options.map((option) => {
           const values =
@@ -106,16 +106,16 @@ const OptionsPicker = ({
               <Accordion.Header>
                 <Accordion.Trigger className="flex w-full items-center justify-between py-3 text-left">
                   <div className="flex items-center gap-2">
-                    <span className="txt-compact-small-plus text-ui-fg-base">
+                    <span className="text-sm font-semibold text-brand-deep-plum">
                       {option.title || "Option"}
                     </span>
-                    <span className="txt-compact-small-plus text-ui-fg-muted">
+                    <span className="text-sm text-brand-deep-plum/50">
                       ({selectedCount})
                     </span>
                   </div>
                   <span
                     className={clsx(
-                      "flex h-7 w-7 items-center justify-center text-ui-fg-muted transition-transform duration-150",
+                      "flex h-7 w-7 items-center justify-center text-brand-deep-plum/50 transition-transform duration-150",
                       {
                         "rotate-180": isOpen,
                       }
@@ -135,11 +135,10 @@ const OptionsPicker = ({
                         key={value.id}
                         onClick={() => toggleValue(value.id)}
                         className={clsx(
-                          "border-ui-border-base border text-small-regular h-10 rounded-rounded px-3 flex items-center transition-colors duration-150",
+                          "text-sm h-9 rounded-full px-3.5 flex items-center transition-colors duration-150 font-semibold",
                           {
-                            "border-ui-border-interactive text-ui-fg-base":
-                              isSelected,
-                            "text-ui-fg-muted hover:text-ui-fg-base":
+                            "bg-brand-pink text-white": isSelected,
+                            "bg-white text-brand-deep-plum/70 hover:bg-brand-blush/60":
                               !isSelected,
                           }
                         )}

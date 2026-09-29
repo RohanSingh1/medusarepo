@@ -134,7 +134,7 @@ export default function ProductActions({
           {(product.variants?.length ?? 0) > 1 && (
             <div className="flex flex-col gap-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-ui-fg-subtle">
+                <span className="text-sm font-semibold text-brand-deep-plum">
                   Choose an option
                 </span>
                 {hasSelection && (
@@ -142,7 +142,7 @@ export default function ProductActions({
                     type="button"
                     onClick={resetOptions}
                     disabled={!!disabled || isAdding}
-                    className="text-small-regular text-ui-fg-interactive underline underline-offset-2 hover:text-ui-fg-interactive-hover disabled:opacity-50"
+                    className="text-sm text-brand-pink underline underline-offset-2 hover:text-brand-deep-plum disabled:opacity-50"
                     data-testid="reset-variant-button"
                   >
                     Reset

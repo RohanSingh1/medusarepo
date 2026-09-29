@@ -32,6 +32,11 @@ export const retrieveRegion = async (id: string) => {
       cache: "force-cache",
     })
     .then(({ region }) => region)
+    // A caller may be holding a region id from a stale in-memory cache (see
+    // getRegion below) or a browser cookie for a region that's since been
+    // removed - 404 here shouldn't crash the page, just behave like "no
+    // region found" the same way getRegion does for an unknown country code.
+    .catch(() => null)
 }
 
 // Unlike the fetch-level `revalidate` above, this in-memory map has no TTL of

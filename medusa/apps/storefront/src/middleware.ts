@@ -141,9 +141,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // if the url doesn't have the country, redirect to it
-  const redirectPath =
-    request.nextUrl.pathname === "/" ? "" : request.nextUrl.pathname
+  // If the url doesn't have the (correct) country, redirect to it. Every
+  // route in this app requires a country prefix, so a first segment that
+  // looks like a country code (2 letters) but isn't a currently valid one -
+  // e.g. a stale/bookmarked "/dk/..." link from before a region was removed -
+  // needs to be replaced, not kept: prepending in front of it would produce
+  // a broken double-prefixed URL like "/au/dk/store".
+  const looksLikeStaleCountryCode =
+    !!firstPathSegment && /^[a-z]{2}$/.test(firstPathSegment)
+  const allSegments = request.nextUrl.pathname.split("/").filter(Boolean)
+  const remainingSegments = looksLikeStaleCountryCode
+    ? allSegments.slice(1)
+    : allSegments
+  const redirectPath = remainingSegments.length
+    ? `/${remainingSegments.join("/")}`
+    : ""
   const queryString = request.nextUrl.search || ""
   const redirectUrl = `${request.nextUrl.origin}/${country}${redirectPath}${queryString}`
 
