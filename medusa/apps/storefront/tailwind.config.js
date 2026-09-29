@@ -20,17 +20,18 @@ module.exports = {
         padding: "padding-top padding-right padding-bottom padding-left",
       },
       colors: {
-        // AURA design reference palette (per client request - replaces the
-        // earlier navy/green brand pass wholesale).
+        // AURA "Light" version palette (per the project's own README, distinct
+        // from the Dark version's corporate Ocean/Sunset/Midnight colours -
+        // both are built on the same WP Creative design system/fonts, but
+        // the Light variant is documented as its own deliberate colour
+        // choice, not a deviation to correct).
         brand: {
-          primary: "#e74777", // main CTA / accent pink
-          "primary-hover": "#d13a67",
-          secondary: "#f6c5cd", // soft pink, light fills
-          "secondary-hover": "#eab3c0",
-          dark: "#3B1A33", // ink - dark section backgrounds, footer
-          "dark-hover": "#2c1326",
-          purple: "#753666", // secondary brand purple - hero panel, badges
-          cream: "#eae5de", // alternating light section background
+          plum: "#753666", // hero panel, feature blocks
+          "deep-plum": "#3B1A33", // text, footer, dark tiles
+          pink: "#e74777", // primary CTAs, accents, most eyebrows
+          coral: "#f65f7f", // glow discs
+          blush: "#f6c5cd", // soft fills, eyebrows on plum
+          sand: "#eae5de", // section backgrounds, cards
         },
         grey: {
           0: "#FFFFFF",

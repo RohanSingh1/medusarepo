@@ -1,9 +1,10 @@
+import Image from "next/image"
+
 import { HttpTypes } from "@medusajs/types"
 
 import { getProductPrice } from "@lib/util/get-product-price"
 import { getFragranceMeta } from "@lib/util/fragrance"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import { Text } from "@modules/common/components/ui"
 import ScentBottle from "@modules/home/components/scent-bottle"
 
 const CollectionProductCard = ({
@@ -19,27 +20,38 @@ const CollectionProductCard = ({
   return (
     <LocalizedClientLink
       href={`/products/${product.handle}`}
-      className="group block h-full overflow-hidden rounded-large bg-white shadow-elevation-card-rest transition-[rotate,transform,box-shadow] duration-300 ease-out hover:[rotate:0deg] hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-elevation-card-hover"
+      className="group block h-full overflow-hidden rounded-[16px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-[rotate,transform,box-shadow] duration-300 ease-out hover:[rotate:0deg] hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-[0_12px_40px_rgba(59,26,51,0.10)]"
       style={{ rotate: `${tilt}deg` }}
     >
-      <ScentBottle accent={accent} tint={tint} className="aspect-square w-full" />
+      {product.thumbnail ? (
+        <div className="relative aspect-square w-full">
+          <Image
+            src={product.thumbnail}
+            alt={product.title}
+            fill
+            sizes="(min-width: 1024px) 25vw, 50vw"
+            className="object-cover"
+          />
+        </div>
+      ) : (
+        <ScentBottle accent={accent} tint={tint} className="aspect-square w-full" />
+      )}
       <div className="p-5">
         <div className="flex items-baseline justify-between gap-2">
-          <Text className="font-display text-2xl-semi text-ui-fg-base">
+          {/* Card title = a sub-heading, not a display headline - Inter Bold */}
+          <p className="font-sans font-bold text-[22px] text-brand-deep-plum">
             {product.title}
-          </Text>
+          </p>
           {cheapestPrice && (
-            <Text className="text-small-semi text-ui-fg-base whitespace-nowrap">
+            <p className="font-sans font-semibold text-sm text-brand-deep-plum whitespace-nowrap">
               {cheapestPrice.calculated_price}
-            </Text>
+            </p>
           )}
         </div>
-        <Text className="text-small-regular text-ui-fg-subtle mt-1.5">
-          {tagline}
-        </Text>
-        <Text className="text-small-semi mt-4" style={{ color: accent }}>
+        <p className="text-sm text-brand-deep-plum/55 mt-1.5">{tagline}</p>
+        <p className="text-sm font-semibold mt-4" style={{ color: accent }}>
           View fragrance
-        </Text>
+        </p>
       </div>
     </LocalizedClientLink>
   )

@@ -10,7 +10,6 @@ import SideMenu from "@modules/layout/components/side-menu"
 
 const NAV_LINKS = [
   { label: "Collection", href: "/store" },
-  { label: "Discover", href: "/#experience" },
   { label: "Our Story", href: "/#story" },
   { label: "Journal", href: "/#journal" },
 ]
@@ -28,7 +27,7 @@ export default async function Nav() {
         <nav className="content-container flex items-center gap-10 w-full h-full">
           <LocalizedClientLink
             href="/"
-            className="font-script text-4xl text-brand-primary mr-auto"
+            className="font-script text-4xl text-brand-pink mr-auto"
             data-testid="nav-store-link"
           >
             AURA
@@ -39,7 +38,7 @@ export default async function Nav() {
               <LocalizedClientLink
                 key={link.label}
                 href={link.href}
-                className="text-small-regular font-medium text-ui-fg-subtle hover:text-brand-primary transition-colors"
+                className="text-small-regular font-medium text-ui-fg-subtle hover:text-brand-pink transition-colors"
               >
                 {link.label}
               </LocalizedClientLink>

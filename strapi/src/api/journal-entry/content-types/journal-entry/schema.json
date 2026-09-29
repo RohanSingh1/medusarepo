@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "journal_entries",
+  "info": {
+    "singularName": "journal-entry",
+    "pluralName": "journal-entries",
+    "displayName": "Journal Entry",
+    "description": "A card shown in the homepage Journal section"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "category": { "type": "string", "required": true },
+    "title": { "type": "string", "required": true },
+    "accentColor": { "type": "string" },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "order": { "type": "integer", "default": 0 }
+  }
+}

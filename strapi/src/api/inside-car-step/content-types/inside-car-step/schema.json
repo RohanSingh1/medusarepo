@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "inside_car_steps",
+  "info": {
+    "singularName": "inside-car-step",
+    "pluralName": "inside-car-steps",
+    "displayName": "Inside The Car Step",
+    "description": "One of the numbered install steps in the 'Inside the Car' homepage section"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "stepNumber": { "type": "string", "required": true },
+    "title": { "type": "string", "required": true },
+    "body": { "type": "text", "required": true },
+    "pinTop": { "type": "string" },
+    "pinLeft": { "type": "string" },
+    "order": { "type": "integer", "default": 0 }
+  }
+}

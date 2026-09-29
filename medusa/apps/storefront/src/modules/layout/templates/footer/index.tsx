@@ -1,4 +1,3 @@
-import { Text } from "@modules/common/components/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 const FOOTER_COLUMNS: { heading: string; items: { label: string; href?: string }[] }[] = [
@@ -26,7 +25,7 @@ const FOOTER_COLUMNS: { heading: string; items: { label: string; href?: string }
 
 export default async function Footer() {
   return (
-    <footer className="bg-brand-dark">
+    <footer className="bg-brand-deep-plum">
       <div className="content-container py-12 small:py-20 grid grid-cols-2 small:grid-cols-4 gap-10">
         <div className="col-span-2 small:col-span-1">
           <LocalizedClientLink
@@ -35,9 +34,9 @@ export default async function Footer() {
           >
             AURA
           </LocalizedClientLink>
-          <Text className="text-white/55 text-small-regular mt-3 max-w-[260px]">
+          <p className="text-white/55 text-small-regular mt-3 max-w-[260px]">
             Fine fragrance composed for the cabin.
-          </Text>
+          </p>
         </div>
         {FOOTER_COLUMNS.map((col) => (
           <div key={col.heading}>
@@ -69,9 +68,9 @@ export default async function Footer() {
         ))}
       </div>
       <div className="content-container pb-8">
-        <Text className="text-small-regular text-white/40 pt-5 border-t border-white/10">
+        <p className="text-small-regular text-white/40 pt-5 border-t border-white/10">
           © {new Date().getFullYear()} AURA Fragrance. All prices in AUD.
-        </Text>
+        </p>
       </div>
     </footer>
   )

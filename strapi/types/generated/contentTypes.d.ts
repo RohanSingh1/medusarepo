@@ -443,34 +443,119 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiHeroSlideHeroSlide extends Struct.CollectionTypeSchema {
-  collectionName: 'hero_slides';
+export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
+  collectionName: 'homepages';
   info: {
-    description: 'A slide in the homepage hero carousel';
-    displayName: 'Hero Slide';
-    pluralName: 'hero-slides';
-    singularName: 'hero-slide';
+    description: 'Editable copy for the homepage sections (hero, story, collection intro, CTA banner)';
+    displayName: 'Homepage';
+    pluralName: 'homepages';
+    singularName: 'homepage';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
+    collectionEyebrow: Schema.Attribute.String;
+    collectionFinderCtaLabel: Schema.Attribute.String;
+    collectionFinderHeading: Schema.Attribute.String;
+    collectionFinderQuestions: Schema.Attribute.JSON;
+    collectionHeadline: Schema.Attribute.String;
+    collectionIntro: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    ctaHref: Schema.Attribute.String;
-    ctaLabel: Schema.Attribute.String;
-    eyebrow: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
+    ctaBannerBody: Schema.Attribute.Text;
+    ctaBannerButtonHref: Schema.Attribute.String;
+    ctaBannerButtonLabel: Schema.Attribute.String;
+    ctaBannerHeadline: Schema.Attribute.Text;
+    heroEyebrow: Schema.Attribute.String;
+    heroHeadlineLine1: Schema.Attribute.String & Schema.Attribute.Required;
+    heroHeadlineLine2: Schema.Attribute.String;
+    heroImage: Schema.Attribute.Media<'images'>;
+    heroPrimaryCtaHref: Schema.Attribute.String;
+    heroPrimaryCtaLabel: Schema.Attribute.String;
+    heroSubcopy: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::hero-slide.hero-slide'
+      'api::homepage.homepage'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    storyBody1: Schema.Attribute.Text;
+    storyBody2: Schema.Attribute.Text;
+    storyEyebrow: Schema.Attribute.String;
+    storyHeadline: Schema.Attribute.Text & Schema.Attribute.Required;
+    storyImage: Schema.Attribute.Media<'images'>;
+    storyTags: Schema.Attribute.JSON;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiInsideCarStepInsideCarStep
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'inside_car_steps';
+  info: {
+    description: "One of the numbered install steps in the 'Inside the Car' homepage section";
+    displayName: 'Inside The Car Step';
+    pluralName: 'inside-car-steps';
+    singularName: 'inside-car-step';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    body: Schema.Attribute.Text & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::inside-car-step.inside-car-step'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    pinLeft: Schema.Attribute.String;
+    pinTop: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    stepNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiJournalEntryJournalEntry
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'journal_entries';
+  info: {
+    description: 'A card shown in the homepage Journal section';
+    displayName: 'Journal Entry';
+    pluralName: 'journal-entries';
+    singularName: 'journal-entry';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    accentColor: Schema.Attribute.String;
+    category: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::journal-entry.journal-entry'
     > &
       Schema.Attribute.Private;
     order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
-    subtitle: Schema.Attribute.Text;
+    thumbnail: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -520,13 +605,13 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiWhyUsItemWhyUsItem extends Struct.CollectionTypeSchema {
-  collectionName: 'why_us_items';
+export interface ApiWhyUsReasonWhyUsReason extends Struct.CollectionTypeSchema {
+  collectionName: 'why_us_reasons';
   info: {
-    description: 'A value-proposition tile in the homepage "Why Choose Us" section';
-    displayName: 'Why Us Item';
-    pluralName: 'why-us-items';
-    singularName: 'why-us-item';
+    description: "One of the six reason tiles in the 'Why AURA' homepage section";
+    displayName: 'Why Us Reason';
+    pluralName: 'why-us-reasons';
+    singularName: 'why-us-reason';
   };
   options: {
     draftAndPublish: true;
@@ -537,29 +622,13 @@ export interface ApiWhyUsItemWhyUsItem extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     icon: Schema.Attribute.Enumeration<
-      [
-        'HandCoins',
-        'Boxes',
-        'Truck',
-        'ShieldCheck',
-        'Star',
-        'Award',
-        'Clock',
-        'Headset',
-        'Leaf',
-        'MapPin',
-        'Droplet',
-        'Sparkles',
-        'Wind',
-        'Car',
-      ]
+      ['Clock', 'Droplet', 'Sparkles', 'ShieldCheck', 'Wind', 'Car']
     > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'ShieldCheck'>;
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::why-us-item.why-us-item'
+      'api::why-us-reason.why-us-reason'
     > &
       Schema.Attribute.Private;
     order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
@@ -1082,9 +1151,11 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::hero-slide.hero-slide': ApiHeroSlideHeroSlide;
+      'api::homepage.homepage': ApiHomepageHomepage;
+      'api::inside-car-step.inside-car-step': ApiInsideCarStepInsideCarStep;
+      'api::journal-entry.journal-entry': ApiJournalEntryJournalEntry;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
-      'api::why-us-item.why-us-item': ApiWhyUsItemWhyUsItem;
+      'api::why-us-reason.why-us-reason': ApiWhyUsReasonWhyUsReason;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

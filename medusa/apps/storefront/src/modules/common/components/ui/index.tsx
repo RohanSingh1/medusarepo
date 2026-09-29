@@ -36,16 +36,21 @@ type HeadingProps = HTMLAttributes<HTMLHeadingElement> & {
   level?: "h1" | "h2" | "h3"
 }
 
+// Matches the brand's 3-role type system: only h1 (a true dominant
+// headline) uses the display font (Publico, regular weight). h2/h3 are
+// Inter Bold/SemiBold "sub-heading" treatments per colors_and_type.css
+// (.wpc-h1/.wpc-h2/.wpc-h3) - NOT display type. Homepage section titles
+// that should read as a big Publico headline pass their own font-display +
+// size override via className (see e.g. modules/home/components/*).
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   ({ className, level: Component = "h2", children, ...props }, ref) => {
     return (
       <Component
         ref={ref}
         className={clsx(
-          "font-display font-medium",
-          Component === "h1" && "text-3xl",
-          Component === "h2" && "text-2xl",
-          Component === "h3" && "text-xl",
+          Component === "h1" && "font-display font-normal text-[42px] leading-[1.1] text-brand-deep-plum",
+          Component === "h2" && "font-sans font-bold text-[28px] leading-[1.2] text-brand-deep-plum",
+          Component === "h3" && "font-sans font-semibold text-[22px] leading-[1.3] text-brand-deep-plum",
           className
         )}
         {...props}
@@ -64,6 +69,12 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean
 }
 
+// Fully pill-shaped, Inter Bold, pink fill as AURA Light's one true CTA
+// colour (per the project README, distinct from the Dark version's orange).
+// "secondary" (transparent + outline) is our own extrapolation for
+// light-background contexts (account/checkout pages) - the reference only
+// specifies a ghost style for dark backgrounds, which is what "transparent"
+// below actually matches (used on dark sections).
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -82,15 +93,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || isLoading}
         className={clsx(
-          "inline-flex gap-2 items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-          variant === "primary" &&
-            "bg-brand-primary text-white hover:bg-brand-primary-hover",
+          "inline-flex gap-2 items-center justify-center rounded-full font-bold transition-[filter,transform] duration-150 ease-[cubic-bezier(.2,.7,.2,1)] hover:brightness-[1.04] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+          variant === "primary" && "bg-brand-pink text-white",
           variant === "secondary" &&
-            "bg-brand-secondary text-gray-900 hover:bg-brand-secondary-hover",
-          variant === "transparent" && "bg-transparent hover:bg-gray-100",
-          size === "small" && "h-8 px-3 text-sm",
-          size === "medium" && "h-10 px-4",
-          size === "large" && "h-12 px-6 text-lg",
+            "bg-transparent text-brand-deep-plum shadow-[inset_0_0_0_1.5px_rgba(59,26,51,0.7)] hover:bg-brand-deep-plum/5",
+          variant === "transparent" && "bg-transparent hover:bg-black/5",
+          size === "small" && "h-9 px-6 text-sm",
+          size === "medium" && "h-11 px-[30px] text-base",
+          size === "large" && "h-[54px] px-10 text-base",
           className
         )}
         {...props}

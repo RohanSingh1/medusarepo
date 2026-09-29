@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "why_us_reasons",
+  "info": {
+    "singularName": "why-us-reason",
+    "pluralName": "why-us-reasons",
+    "displayName": "Why Us Reason",
+    "description": "One of the six reason tiles in the 'Why AURA' homepage section"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text", "required": true },
+    "icon": {
+      "type": "enumeration",
+      "enum": ["Clock", "Droplet", "Sparkles", "ShieldCheck", "Wind", "Car"],
+      "required": true
+    },
+    "order": { "type": "integer", "default": 0 }
+  }
+}

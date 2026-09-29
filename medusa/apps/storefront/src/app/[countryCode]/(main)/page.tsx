@@ -4,7 +4,6 @@ import Hero from "@modules/home/components/hero"
 import Marquee from "@modules/home/components/marquee"
 import Story from "@modules/home/components/story"
 import Collection from "@modules/home/components/collection"
-import Experience from "@modules/home/components/experience"
 import InsideTheCar from "@modules/home/components/inside-the-car"
 import WhyUs from "@modules/home/components/why-us"
 import Testimonials from "@modules/home/components/testimonials"
@@ -37,7 +36,6 @@ export default async function Home(props: {
       <Marquee region={region} />
       <Story />
       <Collection region={region} />
-      <Experience region={region} />
       <InsideTheCar />
       <WhyUs />
       <Testimonials />

@@ -1,60 +1,45 @@
+import { listInsideCarSteps } from "@lib/data/homepage-content"
 import { Heading } from "@modules/common/components/ui"
 
-const STEPS = [
-  {
-    n: "01",
-    title: "Vent mount",
-    body: "A weighted stainless clip grips the blade without rattling. Rotates 30 degrees so the bottle stays level on any vent angle.",
-    pin: { top: "38%", left: "24%" },
-  },
-  {
-    n: "02",
-    title: "Intensity collar",
-    body: "Three positions control the aperture. Turn down in winter when the heater carries scent further, up in summer.",
-    pin: { top: "62%", left: "55%" },
-  },
-  {
-    n: "03",
-    title: "Sealed reservoir",
-    body: "No spill, no leak, no evaporation when parked. The wick draws only when air moves across it.",
-    pin: { top: "28%", left: "76%" },
-  },
-]
+export default async function InsideTheCar() {
+  const steps = await listInsideCarSteps()
 
-export default function InsideTheCar() {
   return (
-    <div className="bg-brand-cream">
+    <div className="bg-brand-sand">
       <div className="content-container py-12 small:py-24">
         <div className="mb-9">
-          <span className="font-display text-large-semi text-brand-primary">
+          <span className="font-script text-[44px] leading-none text-brand-pink">
             Inside the Car
           </span>
-          <Heading level="h2" className="text-2xl-semi small:text-3xl-semi mt-2">
+          <Heading
+            level="h2"
+            className="font-display font-normal text-brand-deep-plum text-[32px] small:text-[52px] leading-[1.08] mt-3"
+          >
             Where it lives
           </Heading>
         </div>
         <div className="grid grid-cols-1 small:grid-cols-2 gap-6">
-          <div className="relative rounded-[24px] overflow-hidden min-h-[320px] small:min-h-[400px] bg-gradient-to-br from-brand-purple via-brand-dark to-brand-purple">
-            {STEPS.map((step) => (
+          <div className="relative rounded-[24px] overflow-hidden min-h-[320px] small:min-h-[400px] bg-gradient-to-br from-brand-plum via-brand-deep-plum to-brand-plum">
+            {steps.map((step) => (
               <div
-                key={step.n}
-                className="absolute h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-primary shadow-[0_0_0_8px_rgba(231,71,119,0.28)] flex items-center justify-center text-small-semi text-white"
-                style={{ top: step.pin.top, left: step.pin.left }}
+                key={step.id}
+                className="absolute h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-pink shadow-[0_0_0_8px_rgba(231,71,119,0.28)] flex items-center justify-center text-sm font-semibold text-white"
+                style={{ top: step.pinTop, left: step.pinLeft }}
               >
-                {step.n.replace("0", "")}
+                {step.stepNumber.replace("0", "")}
               </div>
             ))}
           </div>
           <div className="flex flex-col gap-3 justify-center">
-            {STEPS.map((step) => (
+            {steps.map((step) => (
               <div
-                key={step.n}
-                className="p-6 rounded-large bg-white shadow-elevation-card-rest"
+                key={step.id}
+                className="p-6 rounded-[16px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
               >
-                <div className="text-xsmall-regular uppercase tracking-wide text-brand-purple mb-2">
-                  {step.n} — {step.title}
+                <div className="text-xs uppercase tracking-wide font-semibold text-brand-plum mb-2">
+                  {step.stepNumber} — {step.title}
                 </div>
-                <p className="text-ui-fg-subtle">{step.body}</p>
+                <p className="text-base text-brand-deep-plum/72">{step.body}</p>
               </div>
             ))}
           </div>

@@ -1,51 +1,52 @@
+import Image from "next/image"
+
+import { listJournalEntries } from "@lib/data/homepage-content"
 import { Heading } from "@modules/common/components/ui"
 
-// Placeholder entries matching the design reference - there's no blog engine
-// behind this yet, so these are non-linked cards, not real published posts.
-const ENTRIES = [
-  {
-    category: "Craft",
-    title: "Why cabin heat destroys most fragrance",
-    accent: "#6B5B43",
-  },
-  {
-    category: "Guides",
-    title: "Matching a scent to your interior",
-    accent: "#14708F",
-  },
-  {
-    category: "Studio",
-    title: "Three days in Grasse with our perfumer",
-    accent: "#8A5A17",
-  },
-]
+export default async function Journal() {
+  const entries = await listJournalEntries()
 
-export default function Journal() {
   return (
     <div id="journal" className="content-container py-12 small:py-24">
       <div className="flex items-baseline justify-between gap-4 flex-wrap mb-6">
-        <Heading level="h2" className="text-2xl-semi small:text-3xl-semi">
+        <Heading
+          level="h2"
+          className="font-display font-normal text-brand-deep-plum text-[26px] small:text-[38px]"
+        >
           Journal
         </Heading>
-        <span className="text-small-semi text-brand-primary">All entries</span>
+        <span className="text-sm font-semibold text-brand-pink">All entries</span>
       </div>
       <div className="grid grid-cols-1 small:grid-cols-3 gap-5">
-        {ENTRIES.map((entry) => (
+        {entries.map((entry) => (
           <div
-            key={entry.title}
-            className="rounded-large overflow-hidden bg-white shadow-elevation-card-rest transition-transform duration-300 hover:-translate-y-1.5"
+            key={entry.id}
+            className="rounded-[16px] overflow-hidden bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-transform duration-300 hover:-translate-y-1.5"
           >
-            <div
-              className="h-[160px]"
-              style={{ backgroundColor: entry.accent }}
-            />
+            {entry.thumbnailUrl ? (
+              <div className="relative h-[160px]">
+                <Image
+                  src={entry.thumbnailUrl}
+                  alt={entry.title}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div
+                className="h-[160px]"
+                style={{ backgroundColor: entry.accentColor }}
+              />
+            )}
             <div className="p-5">
-              <div className="text-xsmall-regular uppercase tracking-wide text-ui-fg-muted">
+              <div className="text-xs uppercase tracking-wide font-semibold text-brand-deep-plum/50">
                 {entry.category}
               </div>
-              <div className="font-display text-large-semi text-ui-fg-base mt-2 leading-snug">
+              {/* Card title = sub-heading, not display type - Inter Bold */}
+              <p className="font-sans font-bold text-lg text-brand-deep-plum mt-2 leading-snug">
                 {entry.title}
-              </div>
+              </p>
             </div>
           </div>
         ))}
