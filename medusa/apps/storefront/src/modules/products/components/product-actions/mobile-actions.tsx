@@ -23,6 +23,7 @@ type MobileActionsProps = {
   optionsDisabled: boolean
   onReset: () => void
   hasSelection: boolean
+  isValueAvailable?: (optionId: string, value: string) => boolean
 }
 
 const MobileActions: React.FC<MobileActionsProps> = ({
@@ -37,6 +38,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
   optionsDisabled,
   onReset,
   hasSelection,
+  isValueAvailable,
 }) => {
   const { state, open, close } = useToggleState()
 
@@ -199,6 +201,8 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                                 updateOption={updateOptions}
                                 title={option.title ?? ""}
                                 disabled={optionsDisabled}
+                                hasSelection={hasSelection}
+                                isValueAvailable={isValueAvailable}
                               />
                             </div>
                           )

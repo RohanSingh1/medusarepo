@@ -72,6 +72,19 @@ export default function ProductActions({
   const resetOptions = () => setOptions({})
   const hasSelection = Object.keys(options).length > 0
 
+  // whether picking `value` for `optionId`, combined with whatever is already
+  // selected for the other options, still matches at least one real variant -
+  // used to cross out swatches/pills that would lead to a dead-end combination
+  const isValueAvailable = (optionId: string, value: string) => {
+    const testOptions = { ...options, [optionId]: value }
+    return !!product.variants?.some((v) => {
+      const variantOptions = optionsAsKeymap(v.options) ?? {}
+      return Object.entries(testOptions).every(
+        ([key, val]) => variantOptions[key] === val
+      )
+    })
+  }
+
   //check if the selected options produce a valid variant
   const isValidVariant = useMemo(() => {
     return product.variants?.some((v) => {
@@ -159,6 +172,8 @@ export default function ProductActions({
                       title={option.title ?? ""}
                       data-testid="product-options"
                       disabled={!!disabled || isAdding}
+                      hasSelection={hasSelection}
+                      isValueAvailable={isValueAvailable}
                     />
                   </div>
                 )
@@ -202,6 +217,7 @@ export default function ProductActions({
           optionsDisabled={!!disabled || isAdding}
           onReset={resetOptions}
           hasSelection={hasSelection}
+          isValueAvailable={isValueAvailable}
         />
       </div>
     </>

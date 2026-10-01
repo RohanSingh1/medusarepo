@@ -96,6 +96,7 @@ const OptionsPicker = ({
           const selectedCount = values.filter((value) =>
             selectedValueIds.includes(value.id)
           ).length
+          const isColorOption = /color|colour/i.test(option.title ?? "")
 
           return (
             <Accordion.Item
@@ -126,9 +127,35 @@ const OptionsPicker = ({
                 </Accordion.Trigger>
               </Accordion.Header>
               <Accordion.Content className="pb-4 pt-1">
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3">
                   {values.map((value) => {
                     const isSelected = selectedValueIds.includes(value.id)
+
+                    if (isColorOption) {
+                      return (
+                        <button
+                          key={value.id}
+                          onClick={() => toggleValue(value.id)}
+                          className="flex flex-col items-center gap-1.5 group"
+                          aria-pressed={isSelected}
+                          aria-label={value.label}
+                          title={value.label}
+                        >
+                          <span
+                            className={clsx(
+                              "h-8 w-8 rounded-full transition-shadow shadow-[0_0_0_1px_rgba(59,26,51,0.12)]",
+                              isSelected
+                                ? "shadow-[0_0_0_2px_white,0_0_0_4px_theme(colors.brand.pink)]"
+                                : "group-hover:shadow-[0_0_0_1px_rgba(59,26,51,0.3)]"
+                            )}
+                            style={{ backgroundColor: value.label.toLowerCase() }}
+                          />
+                          <span className="text-xs font-semibold text-brand-deep-plum/70">
+                            {value.label}
+                          </span>
+                        </button>
+                      )
+                    }
 
                     return (
                       <button

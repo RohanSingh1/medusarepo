@@ -152,6 +152,9 @@ const FeaturesTab = ({ features }: { features: StoreProductFeature[] }) => {
   )
 }
 
+const isHexColor = (value: unknown): value is string =>
+  typeof value === "string" && /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(value)
+
 const AdditionalInfoTab = ({
   entries,
 }: {
@@ -164,11 +167,23 @@ const AdditionalInfoTab = ({
           <span className="font-semibold capitalize">
             {key.replace(/_/g, " ")}
           </span>
-          <p className="text-brand-deep-plum/72">
-            {typeof value === "object"
-              ? JSON.stringify(value)
-              : String(value)}
-          </p>
+          {isHexColor(value) ? (
+            <div className="flex items-center gap-2 mt-1.5">
+              <span
+                className="h-7 w-7 rounded-full shrink-0 shadow-[0_0_0_1px_rgba(59,26,51,0.1)]"
+                style={{ backgroundColor: value }}
+              />
+              <span className="text-brand-deep-plum/72 uppercase text-sm">
+                {value}
+              </span>
+            </div>
+          ) : (
+            <p className="text-brand-deep-plum/72">
+              {typeof value === "object"
+                ? JSON.stringify(value)
+                : String(value)}
+            </p>
+          )}
         </div>
       ))}
     </div>
